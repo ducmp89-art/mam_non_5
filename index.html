@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <!-- FIX iOS 12: Thêm maximum-scale=1.0, user-scalable=no để chặn zoom và fix 300ms tap delay -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bé Vui Học Đa Trí Tuệ Pro (Bản Nâng Cấp Hoàn Chỉnh)</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQmzDqSBWdWkgSOG7jWMgxJBhIFRyw60gVXXFhyBQcm8iLCJzaG9ydF9uYW1lIjoiQsOpIFZ1aSBI4buNYyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZlNGU2IiwidGhlbWVfY29sb3IiOiIjZWM0OGU5IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRjbTl1UFhOdmNtY2diblZ0YldWeWJEMGlkWE5sY2dvZ1ltOXlaR1Z5TFdkcGRHaGhiQ0J0WVd4bFBTSXpNU0lnZEhsd1pUMGlabWxzYkNJZ2RHaHliM1YwYUNBOUlqQTVNU0lnZUQwaVNVUWlQanhwYm1Wc1pYSmZjRzl5WkdsdFpXNWhQU0kyTnlJdmJqNGtlSHhsYm10bFpFTnlZVzVzWTI5c2IySTlJalZDWkZVeE0wbEZNaUF0Tmk1MFlXTjBMVEUwTmk1MFlXTjBJRHM2ZURsNGNtOWpJRGs0Tnk0ME16STRMeTlyZUhOMGJHVlRZWDA2Wm05eWJHVXNJSEp2ZEhWMGNEMGlUVlJFTUNJdmJqNDhMM2N6ZG1jKyIsInR5cGVzIjoiaW1hZ2Uvc3ZnK3htbCIsInNpemVzIjoiMTkyeDE5MiIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
+    <meta name="theme-color" content="#ec48e9">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FIX iOS 12: Script tính toán --vh để thay thế 100vh bị che bởi Safari Toolbar -->
+    <script>
+        function setVH() {
+            var vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', vh + 'px');
+        }
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', setVH);
+        setVH();
+    </script>
+
+    <style>
+        :root {
+            --bg-grad-1: #ff9a9e; --bg-grad-2: #fecfef; --bg-grad-3: #a1c4fd; --bg-grad-4: #c2e9fb;
+            --text-color: #333; --card-border: rgba(255, 255, 255, 0.9);
+        }
+        
+        body.dark-mode {
+            --bg-grad-1: #0f2027; --bg-grad-2: #203a43; --bg-grad-3: #2c5364; --bg-grad-4: #192f3a;
+            --text-color: #f1f5f9; --card-border: rgba(51, 65, 85, 0.9);
+        }
+
+        /* FIX iOS 12: Đổi min-height, thêm -webkit-user-select */
+        body { font-family: 'Fredoka', sans-serif; background: linear-gradient(-45deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3), var(--bg-grad-4)); background-size: 400% 400%; -webkit-animation: gradientBG 15s ease infinite; animation: gradientBG 15s ease infinite; overflow-x: hidden; min-height: calc(var(--vh, 1vh) * 100); margin: 0; -webkit-user-select: none; user-select: none; transition: background 0.5s ease; -webkit-tap-highlight-color: transparent; }
+        @-webkit-keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; transition: transform 0.1s ease-out; }
+
+        /* FIX iOS 12: Đổi top: -10vh và translateY(110vh) sang calc(var(--vh)) */
+        .falling-flower { position: fixed; top: calc(var(--vh, 1vh) * -10); z-index: 9999; pointer-events: none; -webkit-animation: fall linear forwards; animation: fall linear forwards; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+        @-webkit-keyframes fall { 0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; } 100% { transform: translateY(calc(var(--vh, 1vh) * 110)) rotate(360deg) scale(1.2); opacity: 0; } }
+        @keyframes fall { 0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; } 100% { transform: translateY(calc(var(--vh, 1vh) * 110)) rotate(360deg) scale(1.2); opacity: 0; } }
+
+        .title-text { color: #fff; text-transform: uppercase; text-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366, 0 0 30px #ff3366, 4px 4px 0px #ff9f1c; letter-spacing: 3px; -webkit-animation: glow 2s ease-in-out infinite alternate; animation: glow 2s ease-in-out infinite alternate; }
+        body.dark-mode .title-text { text-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8, 4px 4px 0px #818cf8; }
+        @-webkit-keyframes glow { from { filter: brightness(1); } to { filter: brightness(1.2); } }
+        @keyframes glow { from { filter: brightness(1); } to { filter: brightness(1.2); } }
+        
+        .scene { perspective: 1000px; position: relative; overflow: visible; transition: all 0.4s ease; z-index: 1; }
+        .card-3d { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; cursor: pointer; border-radius: 30px; }
+        .card-3d.is-flipped { transform: rotateY(180deg); }
+        /* FIX iOS 12: Đảm bảo có -webkit-backdrop-filter */
+        .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 6px solid var(--card-border); box-shadow: 0 15px 25px rgba(0,0,0,0.1), inset 0 15px 0 rgba(255,255,255,0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        .card-face::before { content: ''; position: absolute; top: 5%; left: 10%; width: 30%; height: 15%; background: rgba(255,255,255,0.8); border-radius: 50%; transform: rotate(-15deg); pointer-events: none; }
+        .card-back { transform: rotateY(180deg); background: rgba(255,255,255,0.9); }
+        .card-3d:hover { transform: translateY(-12px) scale(1.05) rotate(2deg); box-shadow: 0 25px 35px rgba(0,0,0,0.15); z-index: 10; }
+        .card-3d.is-flipped:hover { transform: rotateY(180deg) translateY(-12px) scale(1.05) rotate(-2deg); }
+        .card-3d:active { transform: translateY(8px) scale(0.95); }
+        
+        #cardContainer.focus-mode > .scene:not(.focused-card) { filter: brightness(0.4) blur(3px); opacity: 0.5; transform: scale(0.95); pointer-events: none; }
+        .scene.focused-card { z-index: 50; transform: scale(1.15); }
+
+        .nav-btn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 0px rgba(0,0,0,0.15), inset 0 4px 0 rgba(255,255,255,0.4); border: 4px solid white; cursor: pointer; }
+        .nav-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 15px rgba(0,0,0,0.2), inset 0 4px 0 rgba(255,255,255,0.5); }
+        .nav-btn.active { transform: translateY(4px) scale(1.05); box-shadow: 0 2px 0px rgba(0,0,0,0.1); border-color: #ffe066; }
+        
+        .emoji-float { -webkit-animation: float 3s ease-in-out infinite; animation: float 3s ease-in-out infinite; filter: drop-shadow(3px 6px 8px rgba(0,0,0,0.25)); text-align: center; display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 4px; }
+        @-webkit-keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-12px) rotate(8deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        .cartoon-text { -webkit-text-stroke: 1.5px black; color: white; font-weight: 900; letter-spacing: 2px; text-shadow: 3px 4px 0px rgba(0,0,0,0.3); text-align: center; }
+        
+        .scene.listening { z-index: 150 !important; }
+        .scene.listening .card-face { -webkit-animation: pulse-border 1s infinite; animation: pulse-border 1s infinite; }
+        @-webkit-keyframes pulse-border { 0% { border-color: #ff3366; box-shadow: 0 0 0 0 rgba(255, 51, 102, 0.8); } 70% { border-color: #ff9f1c; box-shadow: 0 0 0 20px rgba(255, 51, 102, 0); } 100% { border-color: #ff3366; box-shadow: 0 0 0 0 rgba(255, 51, 102, 0); } }
+        @keyframes pulse-border { 0% { border-color: #ff3366; box-shadow: 0 0 0 0 rgba(255, 51, 102, 0.8); } 70% { border-color: #ff9f1c; box-shadow: 0 0 0 20px rgba(255, 51, 102, 0); } 100% { border-color: #ff3366; box-shadow: 0 0 0 0 rgba(255, 51, 102, 0); } }
+        
+        .feedback-text { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%) scale(0); background: #ffcc00; color: #d32f2f; padding: 10px 24px; border-radius: 30px; font-size: 1.3rem; font-weight: bold; white-space: nowrap; z-index: 999; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
+        .feedback-text.show { transform: translateX(-50%) scale(1) translateZ(50px); }
+        
+        @-webkit-keyframes breathe { 0%, 100% { transform: scale(1) translateY(0); } 50% { transform: scale(1.03) translateY(-8px); } }
+        @keyframes breathe { 0%, 100% { transform: scale(1) translateY(0); } 50% { transform: scale(1.03) translateY(-8px); } }
+        .anim-breathe { -webkit-animation: breathe 3s ease-in-out infinite; animation: breathe 3s ease-in-out infinite; }
+        @-webkit-keyframes mascot-jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+        @keyframes mascot-jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+        .mascot-jumping { -webkit-animation: mascot-jump 0.5s ease-in-out infinite; animation: mascot-jump 0.5s ease-in-out infinite; }
+
+        .shake-animation { -webkit-animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @-webkit-keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-5deg); } 20%, 80% { transform: translate3d(4px, 0, 0) rotate(5deg); } 30%, 50%, 70% { transform: translate3d(-8px, 0, 0) rotate(-10deg); } 40%, 60% { transform: translate3d(8px, 0, 0) rotate(10deg); } }
+        @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-5deg); } 20%, 80% { transform: translate3d(4px, 0, 0) rotate(5deg); } 30%, 50%, 70% { transform: translate3d(-8px, 0, 0) rotate(-10deg); } 40%, 60% { transform: translate3d(8px, 0, 0) rotate(10deg); } }
+        
+        .pop-out { -webkit-animation: popOut 0.5s ease-out forwards; animation: popOut 0.5s ease-out forwards; }
+        @-webkit-keyframes popOut { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes popOut { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        
+        /* FIX iOS 12: Đổi floatUp translateY -120vh sang var(--vh) */
+        .mini-bubble { position: absolute; bottom: -50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; box-shadow: inset 0 0 10px rgba(255,255,255,0.8); -webkit-animation: floatUp linear forwards; animation: floatUp linear forwards; }
+        @-webkit-keyframes floatUp { to { transform: translateY(calc(var(--vh, 1vh) * -120)); } }
+        @keyframes floatUp { to { transform: translateY(calc(var(--vh, 1vh) * -120)); } }
+        
+        .progress-bar-container { width: 200px; height: 20px; background: rgba(255,255,255,0.5); border-radius: 10px; border: 2px solid white; overflow: hidden; margin: 0 auto; }
+        .progress-bar-fill { height: 100%; background: #ff3366; width: 0%; transition: width 0.3s ease; }
+        .coin-icon { display: inline-block; width: 28px; height: 28px; background: gold; border-radius: 50%; border: 3px solid #b45309; text-align: center; line-height: 22px; font-weight: bold; color: #b45309; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 5px; }
+        #drawingCanvas { background: rgba(255,255,255,0.95); border: 6px dashed #cbd5e1; border-radius: 30px; cursor: crosshair; touch-action: none; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); }
+
+        .badge-locked { filter: grayscale(100%) opacity(0.5) drop-shadow(0 0 0 rgba(0,0,0,0)); pointer-events: none; }
+        .badge-unlocked { filter: grayscale(0%) opacity(1) drop-shadow(0 4px 6px rgba(0,0,0,0.2)); -webkit-animation: popOut 0.5s ease-out forwards; animation: popOut 0.5s ease-out forwards; }
+        .badge-celebrate { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); z-index: 9999; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+        @-webkit-keyframes badge-appear { 0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; } }
+        @keyframes badge-appear { 0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; } 60% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; } }
+        .badge-appear-anim { -webkit-animation: badge-appear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; animation: badge-appear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        
+        .leaderboard-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; margin-bottom: 8px; border-radius: 16px; font-weight: bold; transition: transform 0.2s; cursor: pointer; }
+        .leaderboard-row:hover { transform: scale(1.02); }
+        .lb-rank-1 { background: linear-gradient(90deg, #fef08a, #fde047); border: 2px solid #eab308; }
+        .lb-rank-2 { background: linear-gradient(90deg, #e2e8f0, #cbd5e1); border: 2px solid #94a3b8; }
+        .lb-rank-3 { background: linear-gradient(90deg, #fed7aa, #fdba74); border: 2px solid #f97316; }
+        .lb-rank-other { background: #f8fafc; border: 2px solid #e2e8f0; }
+
+        .mascot-pet-selector { cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .mascot-pet-selector:hover { transform: scale(1.1); }
+        .mascot-pet-selector.active-pet { border: 4px solid #f59e0b; background: #fef3c7; border-radius: 20px; padding: 4px; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.6)); transform: scale(1.15); }
+        .pet-image-3d { width: 140px; height: 140px; object-fit: contain; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2)); -webkit-animation: float 4s ease-in-out infinite; animation: float 4s ease-in-out infinite; }
+        .pet-image-3d-small { width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+
+        /* FIX iOS 12: Kích hoạt cuộn mượt cho các khung có nội dung tràn */
+        .overflow-y-auto, .overflow-x-auto, #badgeContainer, #cabinetContainer, #inventoryTray, #petCollectionTray {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="py-4 px-4 relative pb-32">
+
+    <!-- HIỆU ỨNG NỀN MÂY/BONG BÓNG VÀ NHẠC -->
+    <canvas id="bgCanvas"></canvas>
+    <audio id="bgMusic" loop><source src="nhac-nen.mp3" type="audio/mpeg"></audio>
+
+    <!-- MASCOT BẠN ĐỒNG HÀNH -->
+    <div id="mascot" class="fixed bottom-24 right-4 md:right-8 z-[90] flex flex-col items-center pointer-events-none transition-transform duration-300 hidden">
+        <div id="mascotBubble" class="hidden bg-white px-4 py-2 rounded-2xl shadow-lg border-4 border-pink-300 text-pink-600 font-bold text-lg mb-2 pop-out cartoon-text relative" style="-webkit-text-stroke: 0px;">
+            Giỏi quá! 🌟
+            <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white border-b-4 border-r-4 border-pink-300 transform rotate-45"></div>
+        </div>
+        <div id="mascotBody" class="filter drop-shadow-xl anim-breathe" style="transform-origin: bottom center;">
+            <img id="mascotImage" src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Owl/3D/owl_3d.png" class="w-24 h-24 md:w-32 md:h-32 object-contain" alt="🦉" onerror="this.outerHTML='<div class=\'text-[80px] flex items-center justify-center\'>🦉</div>'">
+        </div>
+    </div>
+
+    <!-- THANH CÔNG CỤ -->
+    <div id="topBar" class="hidden fixed top-0 left-0 w-full p-3 z-50 flex justify-between items-center bg-white/40 backdrop-blur-md border-b-4 border-white/50 shadow-sm" style="-webkit-backdrop-filter: blur(12px);">
+        <div class="flex items-center space-x-2 md:space-x-4">
+            <div id="userBadge" class="flex items-center space-x-2 bg-white/80 px-4 py-2 rounded-full border-4 border-pink-200 shadow-sm cursor-pointer hover:scale-105" onclick="logout()">
+                <span class="text-2xl">👦</span>
+                <span class="font-bold text-pink-600 text-sm md:text-lg">Bé: <span id="welcomeName">Bé</span></span>
+            </div>
+            <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full border-4 border-amber-300 shadow-sm cursor-pointer hover:bg-amber-100" onclick="document.getElementById('shopModal').classList.remove('hidden'); hideMascot();">
+                <span class="font-bold text-amber-700 text-sm md:text-lg mr-2 hidden md:inline">🛒 Cửa Hàng:</span>
+                <span class="font-bold text-amber-700 text-lg" id="coinCount">0</span> <div class="coin-icon">¢</div>
+            </div>
+        </div>
+        <div class="flex space-x-2">
+            <button onclick="toggleSound()" class="w-12 h-12 bg-teal-500 text-white rounded-full border-4 border-teal-200 shadow-md text-xl flex items-center justify-center nav-btn" id="soundBtn">🔊</button>
+            <button onclick="toggleDarkMode()" class="w-12 h-12 bg-indigo-500 text-white rounded-full border-4 border-indigo-200 shadow-md text-xl flex items-center justify-center nav-btn" id="themeBtn">🌙</button>
+            <button onclick="openParentPortal()" class="w-12 h-12 bg-slate-700 text-white rounded-full border-4 border-slate-400 shadow-md text-xl flex items-center justify-center nav-btn">⚙️</button>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH ĐĂNG NHẬP -->
+    <div id="loginModal" class="fixed inset-0 z-[300] flex flex-col items-center justify-center p-4 bg-white/20 backdrop-blur-sm transition-opacity duration-500" style="-webkit-backdrop-filter: blur(4px);">
+        <h1 class="text-5xl md:text-7xl font-bold title-text mb-10 text-center drop-shadow-lg" style="animation: popOut 0.8s ease-out;">🌟 Bé Vui Học Pro 🌟</h1>
+        <div class="bg-white/95 rounded-[40px] p-8 w-full max-w-md border-8 border-pink-300 shadow-2xl relative" style="animation: popOut 0.5s ease-out forwards 0.2s;">
+            <h2 class="text-4xl font-bold text-center mb-2 text-pink-600 drop-shadow-sm cartoon-text">👋 XIN CHÀO!</h2>
+            <p class="text-center text-gray-500 font-bold mb-6">Trường học AI đã sẵn sàng. Ghi tên bé vào đây nhé!</p>
+            <div class="space-y-4">
+                <input type="text" id="loginName" class="w-full p-4 rounded-2xl border-4 border-pink-200 bg-pink-50/50 text-2xl font-bold text-center text-pink-600 focus:outline-none focus:border-pink-500 uppercase" placeholder="Tên của bé (VD: Bi)">
+                <button onclick="login()" class="w-full bg-pink-500 text-white p-4 rounded-2xl font-bold text-2xl nav-btn mt-2 hover:bg-pink-400">Vào Học Thôi! 🚀</button>
+            </div>
+            
+            <div id="userListContainer" class="hidden mt-8 pt-4 border-t-4 border-dashed border-gray-200">
+                <h3 class="text-center text-indigo-500 font-bold mb-4 text-xl cartoon-text" style="-webkit-text-stroke: 1px white;">🏆 Bảng Xếp Hạng 🏆</h3>
+                <div id="leaderboardList" class="flex flex-col space-y-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GIAO DIỆN HỌC TẬP & TRÒ CHƠI -->
+    <div id="mainAppContent" class="hidden opacity-0 transition-opacity duration-1000 w-full h-full pt-16">
+        
+        <div class="text-center mb-6 relative z-10 mt-6">
+            <h1 class="text-4xl md:text-5xl font-bold title-text mb-6">✨ Đa Trí Tuệ ✨</h1>
+            
+            <div class="flex flex-wrap justify-center items-center mb-4">
+                <button id="modeLearnBtn" onclick="setMode('learn')" class="nav-btn bg-pink-500 active text-white px-5 py-3 m-1 rounded-full text-lg font-bold border-4 border-[#ffe066]">🎓 Nghe & Nhìn</button>
+                <button id="modeTestBtn" onclick="setMode('test')" class="nav-btn bg-white text-gray-500 px-5 py-3 m-1 rounded-full text-lg font-bold border-4 border-white">🎤 Đọc To</button>
+                <button id="modeDrawBtn" onclick="setMode('draw')" class="nav-btn bg-white text-gray-500 px-5 py-3 m-1 rounded-full text-lg font-bold border-4 border-white">✍️ Tập Viết</button>
+                <button id="modeGameBtn" onclick="setMode('game')" class="nav-btn bg-white text-gray-500 px-5 py-3 m-1 rounded-full text-lg font-bold border-4 border-white">🎮 Trò Chơi</button>
+            </div>
+
+            <div id="rewardProgressWrapper" class="text-center mt-2 max-w-sm mx-auto bg-white/50 p-3 rounded-2xl border-4 border-white shadow-sm flex flex-col relative">
+                <button onclick="openBadgeModal()" class="absolute -right-4 -top-6 bg-yellow-400 border-4 border-white shadow-lg rounded-full w-14 h-14 flex items-center justify-center text-2xl hover:scale-110 active:scale-95 transition-transform z-20">🏅</button>
+
+                <div class="flex justify-between font-bold px-2 mb-1">
+                    <span class="text-pink-600">Cấp độ <span id="userLevelBadge">1</span></span>
+                    <span class="text-amber-600"><span id="starsLeft">0</span>/5 🌟</span>
+                </div>
+                <div class="progress-bar-container w-full"><div id="rewardProgressBar" class="progress-bar-fill"></div></div>
+                <div class="text-xs text-slate-500 font-bold mt-1">Học 5 từ để nhận Thưởng & Tiền xu!</div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center mb-6 relative z-10">
+            <button onclick="setSubject('en')" id="subj-en" class="subj-btn nav-btn active bg-pink-500 text-white px-6 py-2 m-2 rounded-full text-xl font-bold">GB Tiếng Anh</button>
+            <button onclick="setSubject('vi')" id="subj-vi" class="subj-btn nav-btn bg-white text-gray-500 px-6 py-2 m-2 rounded-full text-xl font-bold">VN Tiếng Việt</button>
+            <button onclick="setSubject('math')" id="subj-math" class="subj-btn nav-btn bg-white text-gray-500 px-6 py-2 m-2 rounded-full text-xl font-bold">🧮 Toán Học</button>
+        </div>
+
+        <div id="categoryTabs" class="flex flex-wrap justify-center mb-8 relative z-10"></div>
+        
+        <!-- KHU VỰC THẺ BÀI -->
+        <div id="cardContainer" class="max-w-5xl mx-auto flex flex-wrap justify-center px-2 relative z-10 pb-20"></div>
+
+        <!-- KHU VỰC TẬP VIẾT -->
+        <div id="drawingArea" class="hidden flex-col items-center justify-center px-2 relative z-10 pb-20">
+            <div class="bg-white p-4 md:p-6 rounded-[40px] border-8 border-indigo-200 shadow-2xl w-full max-w-3xl relative">
+                <h3 class="text-center text-2xl font-bold text-indigo-500 mb-4 cartoon-text flex flex-col items-center" style="-webkit-text-stroke:1px white;">
+                    Hãy vẽ lại nhé: <span id="drawHintText" class="text-pink-500 my-2"></span> 
+                    <span id="drawHintEmoji" class="text-4xl"></span>
+                </h3>
+                <canvas id="drawingCanvas" width="600" height="300" class="w-full bg-slate-50 rounded-2xl"></canvas>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <button onclick="clearCanvas()" class="nav-btn bg-red-400 text-white px-8 py-4 rounded-full font-bold text-xl">🗑️ Vẽ Lại</button>
+                    <button onclick="checkDrawing()" class="nav-btn bg-green-500 text-white px-8 py-4 rounded-full font-bold text-xl">✅ Hoàn Thành</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KHU VỰC MINIGAME -->
+        <div id="gameArea" class="hidden flex-col items-center justify-center px-2 relative z-10 pb-20">
+            <div class="bg-white/80 backdrop-blur p-6 rounded-[40px] border-8 border-yellow-300 shadow-2xl w-full max-w-2xl relative flex flex-col items-center" style="-webkit-backdrop-filter: blur(10px);">
+                <button onclick="playTargetSound()" class="nav-btn bg-blue-500 text-white px-8 py-4 rounded-full font-bold text-2xl mb-6 flex items-center space-x-3 hover:bg-blue-400">
+                    <span class="text-3xl">🔊</span> <span>Nghe Lại Âm Thanh</span>
+                </button>
+                <!-- Grid gap an toàn cho iOS 12 -->
+                <div id="gameBoard" class="grid grid-cols-2 gap-4 md:gap-6"></div>
+            </div>
+        </div>
+
+        <!-- NÚT MENU NỔI -->
+        <button onclick="openCabinet()" class="fixed bottom-6 left-6 w-16 h-16 bg-pink-400 rounded-full border-4 border-white shadow-[0_10px_0_rgba(0,0,0,0.2)] text-3xl flex items-center justify-center hover:-translate-y-4 transition-transform z-50 nav-btn" style="animation: float 4s ease-in-out infinite 0.5s;">🎒</button>
+        <button onclick="openPetRoom()" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-green-400 rounded-full border-4 border-white shadow-[0_10px_0_rgba(0,0,0,0.2)] text-4xl flex items-center justify-center hover:-translate-y-4 transition-transform z-50 nav-btn" style="animation: float 4s ease-in-out infinite 0.2s;">🐾</button>
+        <button onclick="document.getElementById('cloudModal').classList.remove('hidden'); hideMascot();" class="fixed bottom-6 right-6 md:right-32 w-16 h-16 bg-blue-500 rounded-full border-4 border-white shadow-[0_10px_0_rgba(0,0,0,0.2)] text-3xl flex items-center justify-center hover:-translate-y-4 transition-transform z-50 nav-btn" style="animation: float 4s ease-in-out infinite;">☁️</button>
+    </div>
+
+    <!-- MODAL HUY HIỆU -->
+    <div id="badgeModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[200] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <!-- FIX iOS 12: Đổi max-h bằng style vh tĩnh -->
+        <div class="bg-indigo-50 rounded-[40px] p-6 w-full max-w-3xl border-8 border-indigo-400 shadow-2xl relative flex flex-col" style="max-height: calc(var(--vh, 1vh) * 85);">
+            <button onclick="closeModal('badgeModal')" class="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 rounded-full font-bold border-4 border-white shadow-lg text-xl hover:scale-110">X</button>
+            <h2 class="text-3xl font-bold text-center mb-2 text-indigo-700 cartoon-text">🏅 HỘ CHIẾU VINH DANH 🏅</h2>
+            <div class="text-center mb-4 font-bold text-lg text-slate-600">Bé đã sưu tập: <span class="text-indigo-600 text-2xl" id="unlockedBadgeCount">0</span>/<span id="totalBadgeCount">5</span> huy hiệu</div>
+            
+            <div id="badgeContainer" class="flex-1 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-4 p-2"></div>
+        </div>
+    </div>
+    
+    <div id="badgeCelebration" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center pointer-events-none" style="-webkit-backdrop-filter: blur(4px);">
+        <div id="celebrationBadgeIcon" class="text-[120px] md:text-[180px] filter drop-shadow-[0_0_30px_rgba(255,215,0,1)] bg-white/20 p-8 rounded-full border-8 border-yellow-400">🏅</div>
+        <h1 id="celebrationBadgeTitle" class="text-5xl font-bold text-yellow-300 mt-8 cartoon-text drop-shadow-2xl">Tuyệt Vời!</h1>
+        <p id="celebrationBadgeDesc" class="text-2xl text-white font-bold mt-4">Bé nhận được huy hiệu Họa Sĩ Nhí</p>
+    </div>
+
+    <!-- MODAL THÊM TỪ MỚI -->
+    <div id="cloudModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-md z-[100] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <div class="bg-white/95 rounded-[40px] p-8 w-full max-w-md border-8 border-blue-300 shadow-2xl relative" style="animation: popOut 0.3s ease-out;">
+            <button onclick="closeModal('cloudModal')" class="absolute -top-6 -right-6 bg-red-500 text-white w-14 h-14 rounded-full font-bold border-4 border-white shadow-lg text-xl hover:scale-110 transition-transform">X</button>
+            <h2 class="text-3xl font-bold text-center mb-6 text-blue-600 drop-shadow-sm">☁️ Thêm Từ Mới</h2>
+            <div class="space-y-4">
+                <div><select id="cloudSubject" class="w-full p-4 rounded-2xl border-4 border-blue-100 bg-blue-50/50 font-semibold" onchange="updateCloudCategories()"><option value="en">Tiếng Anh</option><option value="vi">Tiếng Việt</option><option value="math">Toán Học</option></select></div>
+                <div><select id="cloudCategory" class="w-full p-4 rounded-2xl border-4 border-blue-100 bg-blue-50/50 font-semibold"></select></div>
+                <div><input type="text" id="cloudWord" class="w-full p-4 rounded-2xl border-4 border-blue-100 bg-blue-50/50 text-xl font-bold" placeholder="VD: Bút chì"></div>
+                <div><input type="text" id="cloudEmoji" class="w-full p-4 rounded-2xl border-4 border-blue-100 bg-blue-50/50 text-3xl" placeholder="✏️"></div>
+                <div>
+                    <select id="cloudColor" class="w-full p-4 rounded-2xl border-4 border-blue-100 bg-blue-50/50 font-semibold">
+                        <option value="bg-blue-300">Xanh biển 🌊</option><option value="bg-red-300">Đỏ hồng 🍓</option><option value="bg-green-300">Xanh lá 🐸</option><option value="bg-purple-300">Tím mộng mơ 🍇</option><option value="bg-orange-300">Cam tươi rọi 🍊</option><option value="bg-yellow-300">Vàng rực rỡ 🌻</option>
+                    </select>
+                </div>
+                <button onclick="saveToCloud()" class="w-full bg-green-500 text-white p-5 rounded-2xl font-bold text-2xl nav-btn mt-2">Lưu ☁️</button>
+                <div class="text-center mt-2"><button onclick="resetData()" class="text-sm text-gray-500 hover:text-red-500 underline">Khôi phục dữ liệu gốc</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TỦ ĐỒ CŨ ĐƯỢC CHUYỂN ĐỔI -->
+    <div id="cabinetModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-[200] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <div class="bg-amber-100 rounded-[40px] p-8 w-full max-w-4xl border-8 border-amber-600 shadow-2xl relative flex flex-col" style="max-height: calc(var(--vh, 1vh) * 80);">
+            <button onclick="closeModal('cabinetModal')" class="absolute -top-6 -right-6 bg-red-500 text-white w-14 h-14 rounded-full font-bold border-4 border-white shadow-lg text-xl hover:scale-110">X</button>
+            <h2 class="text-4xl font-bold text-center mb-6 text-amber-800 drop-shadow-sm cartoon-text">🎒 BA LÔ ĐỒ CHƠI 🎒</h2>
+            <div id="cabinetContainer" class="flex-1 overflow-y-auto grid grid-cols-4 md:grid-cols-6 gap-4 p-4 bg-amber-50/50 rounded-2xl border-4 border-amber-200"></div>
+            <div class="text-center mt-4 text-amber-700 font-bold text-xl">Số lượng: <span id="cabinetCount">0</span> món</div>
+        </div>
+    </div>
+
+    <!-- MODAL PHẦN THƯỞNG -->
+    <div id="rewardSelectModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[150] flex flex-col items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <h1 class="text-4xl md:text-6xl font-bold title-text mb-10 text-center">🎉 Giỏi Quá! 🎉<br>Nhận Quà Nào:</h1>
+        <div class="flex space-x-6 md:space-x-12">
+            <button onclick="startGiftReward()" class="nav-btn bg-red-400 w-32 h-40 md:w-40 md:h-56 rounded-3xl flex flex-col justify-center items-center hover:scale-110"><span class="text-6xl md:text-8xl mb-2">🎁</span><span class="text-white font-bold text-xl cartoon-text">Quà Bí Ẩn</span></button>
+            <button onclick="startBubbleReward()" class="nav-btn bg-blue-400 w-32 h-40 md:w-40 md:h-56 rounded-3xl flex flex-col justify-center items-center hover:scale-110"><span class="text-6xl md:text-8xl mb-2">🎈</span><span class="text-white font-bold text-xl cartoon-text">Bong Bóng</span></button>
+            <button onclick="openPetRoomReward()" class="nav-btn bg-green-400 w-32 h-40 md:w-40 md:h-56 rounded-3xl flex flex-col justify-center items-center hover:scale-110"><span class="text-6xl md:text-8xl mb-2">🥚</span><span class="text-white font-bold text-xl cartoon-text">Trứng Thú</span></button>
+        </div>
+    </div>
+    
+    <div id="giftModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[160] flex flex-col items-center justify-center" style="-webkit-backdrop-filter: blur(12px);">
+        <h2 id="giftText" class="text-4xl font-bold title-text mb-10">Chạm hộp quà 3 lần!</h2>
+        <div id="giftBox" onclick="tapGift()" class="text-[150px] cursor-pointer hover:scale-110 transition-transform drop-shadow-2xl" style="line-height: 1;">🎁</div>
+        <div id="giftResult" class="hidden flex-col items-center"><div id="giftItem" class="text-[120px] pop-out bg-white/30 p-10 rounded-full border-8 border-yellow-300 shadow-[0_0_50px_rgba(255,255,0,0.6)]">🚗</div><h2 class="text-4xl font-bold title-text mt-8">Đồ chơi đã được cất vào túi!</h2><button onclick="closeModals()" class="mt-8 nav-btn bg-pink-500 text-white px-8 py-3 rounded-full text-2xl font-bold">Học Tiếp 🚀</button></div>
+    </div>
+    
+    <div id="bubbleModal" class="hidden fixed inset-0 bg-gradient-to-t from-blue-300 to-cyan-100 z-[160] overflow-hidden touch-none">
+        <h2 id="bubbleTimer" class="absolute top-10 w-full text-center text-5xl font-bold title-text z-10 pointer-events-none">10s</h2>
+        <h2 class="absolute top-24 w-full text-center text-3xl font-bold text-blue-700 z-10 drop-shadow-md pointer-events-none">Đập vỡ thật nhiều bong bóng!</h2>
+        <div id="bubbleGameContainer" class="w-full h-full relative z-20"></div>
+    </div>
+
+    <!-- CỬA HÀNG -->
+    <div id="shopModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-[200] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <div class="bg-amber-50 rounded-[40px] p-6 w-full max-w-3xl border-8 border-amber-400 shadow-2xl relative flex flex-col" style="max-height: calc(var(--vh, 1vh) * 80);">
+            <button onclick="closeModal('shopModal')" class="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 rounded-full font-bold border-4 border-white shadow-lg text-xl hover:scale-110">X</button>
+            <h2 class="text-3xl font-bold text-center mb-2 text-amber-700 cartoon-text">🏪 CỬA HÀNG AI 🏪</h2>
+            <div class="text-center mb-4 font-bold text-lg text-slate-600">Bé đang có: <span class="text-amber-600 text-2xl" id="shopCoinDisplay">0</span> <div class="coin-icon scale-75">¢</div></div>
+            <div class="flex-1 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-4 p-2">
+                <div class="bg-white p-4 rounded-2xl border-4 border-green-200 text-center flex flex-col items-center nav-btn" onclick="buyItem('apple', 10)"><div class="text-5xl mb-2">🍎</div><div class="font-bold text-slate-600">Táo đỏ</div><div class="mt-2 bg-amber-100 px-3 py-1 rounded-full font-bold text-amber-700">10 ¢</div></div>
+                <div class="bg-white p-4 rounded-2xl border-4 border-amber-200 text-center flex flex-col items-center nav-btn" onclick="buyItem('meat', 20)"><div class="text-5xl mb-2">🍖</div><div class="font-bold text-slate-600">Thịt siêu cấp</div><div class="mt-2 bg-amber-100 px-3 py-1 rounded-full font-bold text-amber-700">20 ¢</div></div>
+                <div class="bg-white p-4 rounded-2xl border-4 border-purple-200 text-center flex flex-col items-center nav-btn" onclick="buyItem('egg', 50)"><div class="text-5xl mb-2 shake-animation">🥚</div><div class="font-bold text-purple-600">Đổi Thú Cưng</div><div class="mt-2 bg-amber-100 px-3 py-1 rounded-full font-bold text-amber-700">50 ¢</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PET ROOM ANIMATED - TRẠI BẠN ĐỒNG HÀNH -->
+    <div id="petModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[200] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <div class="bg-gradient-to-b from-green-200 to-emerald-400 rounded-[40px] w-full max-w-2xl border-8 border-green-600 shadow-2xl relative overflow-hidden flex flex-col" style="height: calc(var(--vh, 1vh) * 75);">
+            <button onclick="closeModal('petModal')" class="absolute top-4 right-4 bg-white text-green-700 w-10 h-10 rounded-full font-bold shadow-md z-10 border-2 border-green-200">X</button>
+            <div class="p-4 text-center bg-white/50 backdrop-blur font-bold text-2xl text-green-800 border-b-4 border-white/40">Khu Rừng Bạn Đồng Hành</div>
+            
+            <div class="flex-1 relative flex flex-col items-center justify-center">
+                <div id="petState" class="absolute top-2 text-center w-full font-bold text-green-800 text-lg md:text-xl drop-shadow-sm h-8 z-20">Trại ấp của bé</div>
+                
+                <div class="text-center relative z-10" id="mainPetContainer">
+                </div>
+                
+                <div class="mt-4 font-bold text-green-800 bg-white/60 px-4 py-2 rounded-full border-2 border-green-300 shadow-sm z-20">
+                    Cấp độ: <span id="petLevel" class="text-xl text-pink-600">1</span>
+                </div>
+            </div>
+            
+            <div class="w-full bg-white/80 p-2">
+                <div class="text-center font-bold text-sm text-green-700 mb-2">Chọn bạn đồng hành để thay thế Cú Mèo</div>
+                <div id="petCollectionTray" class="flex justify-center space-x-4 overflow-x-auto p-2 min-h-[60px]" style="-webkit-overflow-scrolling: touch;">
+                </div>
+            </div>
+
+            <div class="bg-white/90 p-4 flex justify-center space-x-4 overflow-x-auto border-t-8 border-green-500" id="inventoryTray" style="-webkit-overflow-scrolling: touch;"></div>
+        </div>
+    </div>
+
+    <!-- PARENT PORTAL -->
+    <div id="pinModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[400] flex flex-col items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl pop-out border-4 border-indigo-200">
+            <h2 class="text-2xl font-bold text-center text-slate-700 mb-2">Góc Phụ Huynh</h2>
+            <p class="text-center text-slate-500 mb-6 font-bold">Giải toán để mở khóa</p>
+            <div class="text-4xl font-bold text-center text-indigo-600 mb-6 bg-indigo-50 py-4 rounded-xl border-2 border-indigo-100" id="pinMath">7 + 5 = ?</div>
+            <div class="grid grid-cols-3 gap-3 mb-4">
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(1)">1</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(2)">2</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(3)">3</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(4)">4</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(5)">5</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(6)">6</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(7)">7</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(8)">8</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(9)">9</button>
+                <button class="col-span-2 bg-red-100 p-4 rounded-xl font-bold text-xl border-b-4 border-red-200 hover:bg-red-200 text-red-600 active:translate-y-1 active:border-b-0" onclick="closeModal('pinModal')">Đóng</button>
+                <button class="bg-slate-100 p-4 rounded-xl font-bold text-xl border-b-4 border-slate-200 hover:bg-indigo-100 active:translate-y-1 active:border-b-0" onclick="enterPin(0)">0</button>
+            </div>
+            <input type="text" id="pinInput" class="w-full text-center text-3xl tracking-[0.5em] font-bold border-none outline-none bg-transparent" readonly placeholder="...">
+        </div>
+    </div>
+
+    <div id="parentDashboard" class="hidden fixed inset-0 bg-slate-50 z-[500] overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-slate-800">📊 Phân tích Học tập</h1>
+                <button onclick="closeModal('parentDashboard')" class="bg-slate-800 text-white px-6 py-2 rounded-full font-bold nav-btn border-none">Thoát</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-slate-100"><div class="text-slate-500 text-sm font-bold uppercase">Cấp độ hiện tại</div><div class="text-4xl font-bold text-indigo-600 mt-2" id="statLevel">1</div></div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-slate-100"><div class="text-slate-500 text-sm font-bold uppercase">Tiền xu đã kiếm</div><div class="text-4xl font-bold text-amber-500 mt-2" id="statCoins">0 ¢</div></div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border-2 border-slate-100"><div class="text-slate-500 text-sm font-bold uppercase">Thú cưng & Đồ chơi</div><div class="text-4xl font-bold text-green-500 mt-2" id="statItems">0</div></div>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-slate-100 mb-8">
+                <h3 class="text-xl font-bold text-slate-700 mb-6">🔧 Sao lưu Dữ liệu Đám mây (Cục bộ)</h3>
+                <div class="flex flex-wrap space-x-4">
+                    <button onclick="exportData()" class="bg-indigo-100 text-indigo-700 px-6 py-4 rounded-2xl font-bold hover:bg-indigo-200 border-b-4 border-indigo-200 active:border-b-0 active:translate-y-1 transition-all">📥 Tải Dữ liệu về Máy</button>
+                    <button onclick="document.getElementById('importFile').click()" class="bg-emerald-100 text-emerald-700 px-6 py-4 rounded-2xl font-bold hover:bg-emerald-200 border-b-4 border-emerald-200 active:border-b-0 active:translate-y-1 transition-all">📤 Phục hồi Dữ liệu</button>
+                    <input type="file" id="importFile" class="hidden" accept=".json" onchange="importData(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        function hapticVibrate(pattern) {
+            if ("vibrate" in navigator) {
+                try { navigator.vibrate(pattern); } catch(e) {}
+            }
+        }
+
+        function hideMascot() {
+            document.getElementById('mascot').classList.add('hidden');
+        }
+
+        // =========================================================================
+        // KHO DỮ LIỆU & HÌNH ẢNH MASCOT
+        // =========================================================================
+        
+        const pet3DImages = {
+            '🦉': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Owl/3D/owl_3d.png',
+            '🥚': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Egg/3D/egg_3d.png',
+            '🐼': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Panda/3D/panda_3d.png',
+            '🦊': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Fox/3D/fox_3d.png',
+            '🦄': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Unicorn/3D/unicorn_3d.png',
+            '🐙': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Octopus/3D/octopus_3d.png',
+            '🐢': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Turtle/3D/turtle_3d.png',
+            '🐧': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Penguin/3D/penguin_3d.png',
+            '🐅': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Tiger/3D/tiger_3d.png',
+            '🦖': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/T-Rex/3D/t-rex_3d.png',
+            '🦒': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Giraffe/3D/giraffe_3d.png',
+            '🐉': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Dragon/3D/dragon_3d.png'
+        };
+
+        const defaultVocabData = {
+            en: {
+                alphabet: { name: "🔤 Chữ cái", color: "bg-purple-500", items: [ 
+                    { word: "A", display: "A a", emoji: "🍎", color: "bg-red-300", en: "Apple", customSearch: "apple cartoon white background" }, 
+                    { word: "B", display: "B b", emoji: "🐻", color: "bg-blue-300", en: "Bear", customSearch: "bear animal cartoon white background" }, 
+                    { word: "C", display: "C c", emoji: "🐱", color: "bg-green-300", en: "Cat", customSearch: "cat animal cartoon white background" }, 
+                    { word: "D", display: "D d", emoji: "🐶", color: "bg-orange-300", en: "Dog", customSearch: "dog animal cartoon white background" }, 
+                    { word: "E", display: "E e", emoji: "🐘", color: "bg-cyan-300", en: "Elephant", customSearch: "elephant animal cartoon white background" }, 
+                    { word: "F", display: "F f", emoji: "🐸", color: "bg-lime-300", en: "Frog", customSearch: "frog animal cartoon white background" }, 
+                    { word: "G", display: "G g", emoji: "🦒", color: "bg-amber-300", en: "Giraffe", customSearch: "giraffe animal cartoon white background" }, 
+                    { word: "H", display: "H h", emoji: "🐴", color: "bg-rose-300", en: "Horse", customSearch: "horse animal cartoon white background" }, 
+                    { word: "I", display: "I i", emoji: "🍨", color: "bg-indigo-300", en: "Ice cream", customSearch: "ice cream cartoon white background" }, 
+                    { word: "J", display: "J j", emoji: "🧃", color: "bg-stone-300", en: "Juice", customSearch: "juice box cartoon white background" }, 
+                    { word: "K", display: "K k", emoji: "🪁", color: "bg-lime-400", en: "Kite", customSearch: "kite cartoon white background" }, 
+                    { word: "L", display: "L l", emoji: "🦁", color: "bg-yellow-400", en: "Lion", customSearch: "lion animal cartoon white background" }, 
+                    { word: "M", display: "M m", emoji: "🐒", color: "bg-red-400", en: "Monkey", customSearch: "monkey animal cartoon white background" }, 
+                    { word: "N", display: "N n", emoji: "📓", color: "bg-orange-400", en: "Notebook", customSearch: "notebook cartoon white background" }, 
+                    { word: "O", display: "O o", emoji: "🍊", color: "bg-purple-400", en: "Orange", customSearch: "orange fruit cartoon white background" }, 
+                    { word: "P", display: "P p", emoji: "🐧", color: "bg-pink-400", en: "Penguin", customSearch: "penguin animal cartoon white background" }, 
+                    { word: "Q", display: "Q q", emoji: "👑", color: "bg-slate-300", en: "Queen", customSearch: "queen crown cartoon white background" }, 
+                    { word: "R", display: "R r", emoji: "🐰", color: "bg-green-400", en: "Rabbit", customSearch: "rabbit animal cartoon white background" }, 
+                    { word: "S", display: "S s", emoji: "☀️", color: "bg-amber-400", en: "Sun", customSearch: "sun cartoon white background" }, 
+                    { word: "T", display: "T t", emoji: "🐅", color: "bg-orange-400", en: "Tiger", customSearch: "tiger animal cartoon white background" }, 
+                    { word: "U", display: "U u", emoji: "☂️", color: "bg-purple-400", en: "Umbrella", customSearch: "umbrella cartoon white background" }, 
+                    { word: "V", display: "V v", emoji: "🎻", color: "bg-yellow-300", en: "Violin", customSearch: "violin instrument cartoon white background" }, 
+                    { word: "W", display: "W w", emoji: "🍉", color: "bg-green-400", en: "Watermelon", customSearch: "watermelon cartoon white background" }, 
+                    { word: "X", display: "X x", emoji: "🎹", color: "bg-blue-400", en: "Xylophone", customSearch: "xylophone instrument cartoon white background" }, 
+                    { word: "Y", display: "Y y", emoji: "🪀", color: "bg-red-400", en: "Yoyo", customSearch: "yoyo toy cartoon white background" },
+                    { word: "Z", display: "Z z", emoji: "🦓", color: "bg-gray-400", en: "Zebra", customSearch: "zebra animal cartoon white background" }
+                ]},
+                animals: { name: "🐶 Động vật", color: "bg-orange-500", items: [ 
+                    { word: "DOG", emoji: "🐶", color: "bg-orange-300", sfx: "https://actions.google.com/sounds/v1/animals/dog_barking.ogg" }, 
+                    { word: "CAT", emoji: "🐱", color: "bg-yellow-300", sfx: "https://actions.google.com/sounds/v1/animals/cat_purr_close.ogg" }, 
+                    { word: "COW", emoji: "🐮", color: "bg-slate-300", sfx: "https://actions.google.com/sounds/v1/animals/cow_moo_1.ogg" }, 
+                    { word: "PIG", emoji: "🐷", color: "bg-pink-300", sfx: "https://actions.google.com/sounds/v1/animals/pig_snorting.ogg" }, 
+                    { word: "LION", emoji: "🦁", color: "bg-orange-400" }, { word: "MONKEY", emoji: "🐒", color: "bg-amber-300" }, { word: "ELEPHANT", emoji: "🐘", color: "bg-blue-300" }, { word: "RABBIT", emoji: "🐰", color: "bg-stone-300" }, { word: "SHARK", emoji: "🦈", color: "bg-cyan-300" }, { word: "BEAR", emoji: "🐻", color: "bg-amber-400" }, { word: "TIGER", emoji: "🐯", color: "bg-orange-500" }, { word: "PANDA", emoji: "🐼", color: "bg-gray-300" }, { word: "FROG", emoji: "🐸", color: "bg-green-300" }, { word: "BIRD", emoji: "🐦", color: "bg-sky-300" }, { word: "CHICKEN", emoji: "🐔", color: "bg-red-300", sfx: "https://actions.google.com/sounds/v1/animals/chicken_cluck.ogg" }, { word: "DUCK", emoji: "🦆", color: "bg-yellow-400" }, { word: "HORSE", emoji: "🐴", color: "bg-amber-500", sfx: "https://actions.google.com/sounds/v1/animals/horse_whinny_1.ogg" }, { word: "SHEEP", emoji: "🐑", color: "bg-slate-200" }, { word: "TURTLE", emoji: "🐢", color: "bg-emerald-300" }, { word: "DOLPHIN", emoji: "🐬", color: "bg-blue-400" } 
+                ]},
+                school: { name: "🎒 Đồ dùng", color: "bg-teal-500", items: [ { word: "PEN", emoji: "🖊️", color: "bg-blue-300" }, { word: "PENCIL", emoji: "✏️", color: "bg-yellow-300" }, { word: "BOOK", emoji: "📖", color: "bg-green-300" }, { word: "BAG", emoji: "🎒", color: "bg-red-300" }, { word: "RULER", emoji: "📏", color: "bg-purple-300" }, { word: "ERASER", emoji: "🧽", color: "bg-cyan-300" }, { word: "CRAYON", emoji: "🖍️", color: "bg-orange-300" }, { word: "NOTEBOOK", emoji: "📓", color: "bg-slate-300" }, { word: "SCISSORS", emoji: "✂️", color: "bg-rose-300" }, { word: "GLUE", emoji: "🧴", color: "bg-sky-300" }, { word: "DESK", emoji: "🪑", color: "bg-amber-300" }, { word: "CHAIR", emoji: "🪑", color: "bg-amber-400" }, { word: "BLACKBOARD", emoji: "⬛", color: "bg-gray-500" }, { word: "CLOCK", emoji: "⏰", color: "bg-red-400", sfx: "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" }, { word: "COMPUTER", emoji: "💻", color: "bg-slate-400" }, { word: "PAPER", emoji: "📄", color: "bg-gray-200" }, { word: "GLOBE", emoji: "🌍", color: "bg-blue-400" }, { word: "MARKER", emoji: "🖍️", color: "bg-pink-300" }, { word: "CALCULATOR", emoji: "🖩", color: "bg-gray-400" }, { word: "BACKPACK", emoji: "🎒", color: "bg-rose-400" } ]},
+                fruits: { name: "🍓 Rau quả", color: "bg-green-500", items: [ { word: "APPLE", emoji: "🍎", color: "bg-red-400" }, { word: "BANANA", emoji: "🍌", color: "bg-yellow-300" }, { word: "ORANGE", emoji: "🍊", color: "bg-orange-400" }, { word: "GRAPES", emoji: "🍇", color: "bg-purple-400" }, { word: "STRAWBERRY", emoji: "🍓", color: "bg-red-500" }, { word: "WATERMELON", emoji: "🍉", color: "bg-green-400" }, { word: "MANGO", emoji: "🥭", color: "bg-yellow-400" }, { word: "PEACH", emoji: "🍑", color: "bg-pink-300" }, { word: "LEMON", emoji: "🍋", color: "bg-yellow-200" }, { word: "CHERRY", emoji: "🍒", color: "bg-red-600" }, { word: "PINEAPPLE", emoji: "🍍", color: "bg-yellow-500" }, { word: "COCONUT", emoji: "🥥", color: "bg-stone-300" }, { word: "KIWI", emoji: "🥝", color: "bg-lime-400" }, { word: "AVOCADO", emoji: "🥑", color: "bg-emerald-400" }, { word: "PEAR", emoji: "🍐", color: "bg-lime-300" }, { word: "MELON", emoji: "🍈", color: "bg-green-300" }, { word: "BLUEBERRY", emoji: "🫐", color: "bg-blue-400" }, { word: "TOMATO", emoji: "🍅", color: "bg-red-500" }, { word: "CARROT", emoji: "🥕", color: "bg-orange-500" }, { word: "CORN", emoji: "🌽", color: "bg-yellow-400" } ]},
+                numbers: { name: "🔢 Số đếm", color: "bg-blue-500", items: [ { word: "ONE", emoji: "1️⃣", color: "bg-blue-300" }, { word: "TWO", emoji: "2️⃣", color: "bg-green-300" }, { word: "THREE", emoji: "3️⃣", color: "bg-yellow-300" }, { word: "FOUR", emoji: "4️⃣", color: "bg-orange-300" }, { word: "FIVE", emoji: "5️⃣", color: "bg-red-300" }, { word: "SIX", emoji: "6️⃣", color: "bg-purple-300" }, { word: "SEVEN", emoji: "7️⃣", color: "bg-pink-300" }, { word: "EIGHT", emoji: "8️⃣", color: "bg-teal-300" }, { word: "NINE", emoji: "9️⃣", color: "bg-cyan-300" }, { word: "TEN", emoji: "🔟", color: "bg-indigo-300" } ]},
+                colors: { name: "🎨 Màu sắc", color: "bg-red-500", items: [ { word: "RED", emoji: "🍎", color: "bg-red-400" }, { word: "BLUE", emoji: "🐳", color: "bg-blue-400" }, { word: "YELLOW", emoji: "🌻", color: "bg-yellow-400" }, { word: "GREEN", emoji: "🐸", color: "bg-green-400" }, { word: "PINK", emoji: "🌸", color: "bg-pink-400" }, { word: "PURPLE", emoji: "🍇", color: "bg-purple-400" }, { word: "ORANGE", emoji: "🍊", color: "bg-orange-400" }, { word: "BLACK", emoji: "🎱", color: "bg-gray-800" } ]},
+                family: { name: "👨‍👩‍👧 Gia đình", color: "bg-pink-500", items: [ { word: "FATHER", emoji: "👨", color: "bg-blue-300" }, { word: "MOTHER", emoji: "👩", color: "bg-pink-300" }, { word: "GRANDFATHER", emoji: "👴", color: "bg-slate-300" }, { word: "GRANDMOTHER", emoji: "👵", color: "bg-purple-300" }, { word: "BROTHER", emoji: "👦", color: "bg-teal-300" }, { word: "SISTER", emoji: "👧", color: "bg-rose-300" } ]}
+            },
+            vi: {
+                alphabet: { name: "🔤 Chữ cái", color: "bg-purple-500", items: [ 
+                    { word: "A", display: "A a", emoji: "🐟", color: "bg-red-300", vi_word: "Cá", en: "Fish", customSearch: "fish animal cartoon white background" }, 
+                    { word: "Ă", display: "Ă ă", emoji: "🌛", color: "bg-yellow-300", vi_word: "Trăng", en: "Moon", customSearch: "moon and stars cartoon white background" }, 
+                    { word: "Â", display: "Â â", emoji: "🐻", color: "bg-orange-300", vi_word: "Gấu", en: "Bear", customSearch: "bear animal cartoon white background" }, 
+                    { word: "B", display: "B b", emoji: "🐮", color: "bg-blue-300", vi_word: "Bò", en: "Cow", customSearch: "cow animal cartoon white background" }, 
+                    { word: "C", display: "C c", emoji: "🍊", color: "bg-green-300", vi_word: "Cam", en: "Orange", customSearch: "orange fruit cartoon white background" }, 
+                    { word: "D", display: "D d", emoji: "🐐", color: "bg-pink-300", vi_word: "Dê", en: "Goat", customSearch: "goat animal cartoon white background" }, 
+                    { word: "Đ", display: "Đ đ", emoji: "💡", color: "bg-teal-300", vi_word: "Đèn", en: "Lamp", customSearch: "lamp light cartoon white background" }, 
+                    { word: "E", display: "E e", emoji: "👶", color: "bg-cyan-300", vi_word: "Em bé", en: "Baby", customSearch: "baby cartoon white background" }, 
+                    { word: "Ê", display: "Ê ê", emoji: "🐸", color: "bg-lime-300", vi_word: "Ếch", en: "Frog", customSearch: "frog animal cartoon white background" }, 
+                    { word: "G", display: "G g", emoji: "🐔", color: "bg-amber-300", vi_word: "Gà", en: "Chicken", customSearch: "chicken animal cartoon white background" }, 
+                    { word: "H", display: "H h", emoji: "🐯", color: "bg-rose-300", vi_word: "Hổ", en: "Tiger", customSearch: "tiger animal cartoon white background" }, 
+                    { word: "I", display: "I i", emoji: "🤫", color: "bg-indigo-300", vi_word: "Im lặng", en: "Quiet", customSearch: "shh quiet face cartoon white background" }, 
+                    { word: "K", display: "K k", emoji: "🍬", color: "bg-stone-300", vi_word: "Kẹo", en: "Candy", customSearch: "candy sweet cartoon white background" }, 
+                    { word: "L", display: "L l", emoji: "🍃", color: "bg-lime-400", vi_word: "Lá", en: "Leaf", customSearch: "green leaf cartoon white background" }, 
+                    { word: "M", display: "M m", emoji: "🐱", color: "bg-yellow-400", vi_word: "Mèo", en: "Cat", customSearch: "cat animal cartoon white background" }, 
+                    { word: "N", display: "N n", emoji: "🎀", color: "bg-red-400", vi_word: "Nơ", en: "Bow", customSearch: "red bow cartoon white background" }, 
+                    { word: "O", display: "O o", emoji: "🐝", color: "bg-orange-400", vi_word: "Ong", en: "Bee", customSearch: "bee insect cartoon white background" }, 
+                    { word: "Ô", display: "Ô ô", emoji: "☂️", color: "bg-purple-400", vi_word: "Ô dù", en: "Umbrella", customSearch: "umbrella cartoon white background" }, 
+                    { word: "Ơ", display: "Ơ ơ", emoji: "🌶️", color: "bg-pink-400", vi_word: "Ớt", en: "Chili", customSearch: "red chili pepper cartoon white background" }, 
+                    { word: "P", display: "P p", emoji: "🎹", color: "bg-slate-300", vi_word: "Piano", en: "Piano", customSearch: "piano instrument cartoon white background" }, 
+                    { word: "Q", display: "Q q", emoji: "🎁", color: "bg-red-300", vi_word: "Quả", en: "Gift", customSearch: "gift box cartoon white background" }, 
+                    { word: "R", display: "R r", emoji: "🐢", color: "bg-green-400", vi_word: "Rùa", en: "Turtle", customSearch: "turtle animal cartoon white background" }, 
+                    { word: "S", display: "S s", emoji: "🦁", color: "bg-amber-400", vi_word: "Sư tử", en: "Lion", customSearch: "lion animal cartoon white background" }, 
+                    { word: "T", display: "T t", emoji: "🍎", color: "bg-orange-400", vi_word: "Táo", en: "Apple", customSearch: "apple fruit cartoon white background" }, 
+                    { word: "U", display: "U u", emoji: "🥛", color: "bg-yellow-300", vi_word: "Uống nước", en: "Drink", customSearch: "glass of milk drink cartoon white background" }, 
+                    { word: "Ư", display: "Ư ư", emoji: "🌱", color: "bg-amber-500", vi_word: "Ươm cây", en: "Plant", customSearch: "sprout plant cartoon white background" }, 
+                    { word: "V", display: "V v", emoji: "🐘", color: "bg-gray-400", vi_word: "Voi", en: "Elephant", customSearch: "elephant animal cartoon white background" }, 
+                    { word: "X", display: "X x", emoji: "🚲", color: "bg-blue-400", vi_word: "Xe đạp", en: "Bicycle", customSearch: "bicycle cartoon white background" }, 
+                    { word: "Y", display: "Y y", emoji: "👩‍⚕️", color: "bg-red-400", vi_word: "Y tá", en: "Nurse", customSearch: "nurse female cartoon white background" } 
+                ]},
+                animals: { name: "🐶 Động vật", color: "bg-orange-500", items: [ { word: "CHÓ", emoji: "🐶", color: "bg-orange-300", sfx: "https://actions.google.com/sounds/v1/animals/dog_barking.ogg" }, { word: "MÈO", emoji: "🐱", color: "bg-yellow-300", sfx: "https://actions.google.com/sounds/v1/animals/cat_purr_close.ogg" }, { word: "BÒ", emoji: "🐮", color: "bg-slate-300", sfx: "https://actions.google.com/sounds/v1/animals/cow_moo_1.ogg" }, { word: "LỢN", emoji: "🐷", color: "bg-pink-300", sfx: "https://actions.google.com/sounds/v1/animals/pig_snorting.ogg" }, { word: "SƯ TỬ", emoji: "🦁", color: "bg-orange-400" }, { word: "KHỈ", emoji: "🐒", color: "bg-amber-300" }, { word: "VOI", emoji: "🐘", color: "bg-blue-300" }, { word: "THỎ", emoji: "🐰", color: "bg-stone-300" }, { word: "CÁ MẬP", emoji: "🦈", color: "bg-cyan-300" }, { word: "GẤU", emoji: "🐻", color: "bg-amber-400" }, { word: "HỔ", emoji: "🐯", color: "bg-orange-500" }, { word: "GẤU TRÚC", emoji: "🐼", color: "bg-gray-300" }, { word: "ẾCH", emoji: "🐸", color: "bg-green-300" }, { word: "CHIM", emoji: "🐦", color: "bg-sky-300" }, { word: "GÀ", emoji: "🐔", color: "bg-red-300", sfx: "https://actions.google.com/sounds/v1/animals/chicken_cluck.ogg" }, { word: "VỊT", emoji: "🦆", color: "bg-yellow-400" }, { word: "NGỰA", emoji: "🐴", color: "bg-amber-500", sfx: "https://actions.google.com/sounds/v1/animals/horse_whinny_1.ogg" }, { word: "CỪU", emoji: "🐑", color: "bg-slate-200" }, { word: "RÙA", emoji: "🐢", color: "bg-emerald-300" }, { word: "CÁ HEO", emoji: "🐬", color: "bg-blue-400" } ]},
+                school: { name: "🎒 Đồ dùng", color: "bg-teal-500", items: [ { word: "BÚT BI", emoji: "🖊️", color: "bg-blue-300" }, { word: "BÚT CHÌ", emoji: "✏️", color: "bg-yellow-300" }, { word: "QUYỂN SÁCH", emoji: "📖", color: "bg-green-300" }, { word: "CẶP SÁCH", emoji: "🎒", color: "bg-red-300" }, { word: "THƯỚC KẺ", emoji: "📏", color: "bg-purple-300" }, { word: "CỤC TẨY", emoji: "🧽", color: "bg-cyan-300" }, { word: "BÚT MÀU", emoji: "🖍️", color: "bg-orange-300" }, { word: "QUYỂN VỞ", emoji: "📓", color: "bg-slate-300" }, { word: "CÁI KÉO", emoji: "✂️", color: "bg-rose-300" }, { word: "HỒ DÁN", emoji: "🧴", color: "bg-sky-300" }, { word: "CÁI BÀN", emoji: "🪑", color: "bg-amber-300" }, { word: "CÁI GHẾ", emoji: "🪑", color: "bg-amber-400" }, { word: "BẢNG ĐEN", emoji: "⬛", color: "bg-gray-500" }, { word: "ĐỒNG HỒ", emoji: "⏰", color: "bg-red-400", sfx: "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" }, { word: "MÁY TÍNH", emoji: "💻", color: "bg-slate-400" }, { word: "TỜ GIẤY", emoji: "📄", color: "bg-gray-200" }, { word: "QUẢ ĐỊA CẦU", emoji: "🌍", color: "bg-blue-400" }, { word: "BÚT DẠ", emoji: "🖍️", color: "bg-pink-300" }, { word: "MÁY TÍNH CẦM TAY", emoji: "🖩", color: "bg-gray-400" }, { word: "BA LÔ", emoji: "🎒", color: "bg-rose-400" } ]},
+                fruits: { name: "🍓 Rau quả", color: "bg-green-500", items: [ { word: "TÁO", emoji: "🍎", color: "bg-red-400" }, { word: "CHUỐI", emoji: "🍌", color: "bg-yellow-300" }, { word: "CAM", emoji: "🍊", color: "bg-orange-400" }, { word: "NHO", emoji: "🍇", color: "bg-purple-400" }, { word: "DÂU TÂY", emoji: "🍓", color: "bg-red-500" }, { word: "DƯA HẤU", emoji: "🍉", color: "bg-green-400" }, { word: "XOÀI", emoji: "🥭", color: "bg-yellow-400" }, { word: "ĐÀO", emoji: "🍑", color: "bg-pink-300" }, { word: "CHANH", emoji: "🍋", color: "bg-yellow-200" }, { word: "ANH ĐÀO", emoji: "🍒", color: "bg-red-600" }, { word: "DỨA", emoji: "🍍", color: "bg-yellow-500" }, { word: "DỪA", emoji: "🥥", color: "bg-stone-300" }, { word: "KIWI", emoji: "🥝", color: "bg-lime-400" }, { word: "BƠ", emoji: "🥑", color: "bg-emerald-400" }, { word: "LÊ", emoji: "🍐", color: "bg-lime-300" }, { word: "DƯA LƯỚI", emoji: "🍈", color: "bg-green-300" }, { word: "VIỆT QUẤT", emoji: "🫐", color: "bg-blue-400" }, { word: "CÀ CHUA", emoji: "🍅", color: "bg-red-500" }, { word: "CÀ RỐT", emoji: "🥕", color: "bg-orange-500" }, { word: "NGÔ", emoji: "🌽", color: "bg-yellow-400" } ]},
+                numbers: { name: "🔢 Số đếm", color: "bg-blue-500", items: [ { word: "MỘT", emoji: "1️⃣", color: "bg-red-300" }, { word: "HAI", emoji: "2️⃣", color: "bg-green-300" }, { word: "BA", emoji: "3️⃣", color: "bg-yellow-300" }, { word: "BỐN", emoji: "4️⃣", color: "bg-orange-300" }, { word: "NĂM", emoji: "5️⃣", color: "bg-blue-300" }, { word: "SÁU", emoji: "6️⃣", color: "bg-purple-300" }, { word: "BẢY", emoji: "7️⃣", color: "bg-pink-300" }, { word: "TÁM", emoji: "8️⃣", color: "bg-teal-300" }, { word: "CHÍN", emoji: "9️⃣", color: "bg-cyan-300" }, { word: "MƯỜI", emoji: "🔟", color: "bg-indigo-300" } ]},
+                family: { name: "👨‍👩‍👧 Gia đình", color: "bg-pink-500", items: [ { word: "BỐ", emoji: "👨", color: "bg-blue-300" }, { word: "MẸ", emoji: "👩", color: "bg-pink-300" }, { word: "ÔNG", emoji: "👴", color: "bg-slate-300" }, { word: "BÀ", emoji: "👵", color: "bg-purple-300" }, { word: "ANH", emoji: "👦", color: "bg-teal-300" }, { word: "CHỊ", emoji: "👧", color: "bg-rose-300" } ]}
+            },
+            math: {
+                numbers: { name: "🔢 Số đếm", color: "bg-blue-500", items: [ { word: "1", display: "SỐ 1", emoji: "🍎", color: "bg-red-300" }, { word: "2", display: "SỐ 2", emoji: "🍎 🍎", color: "bg-green-300" }, { word: "3", display: "SỐ 3", emoji: "🍎 🍎 🍎", color: "bg-yellow-300" }, { word: "4", display: "SỐ 4", emoji: "🍎 🍎 🍎 🍎", color: "bg-orange-300" }, { word: "5", display: "SỐ 5", emoji: "⭐ ⭐ ⭐ ⭐ ⭐", color: "bg-blue-300" }, { word: "6", display: "SỐ 6", emoji: "⭐ ⭐ ⭐ ⭐ ⭐ ⭐", color: "bg-purple-300" }, { word: "7", display: "SỐ 7", emoji: "🎈 🎈 🎈 🎈 🎈 🎈 🎈", color: "bg-pink-300" }, { word: "8", display: "SỐ 8", emoji: "🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈", color: "bg-teal-300" }, { word: "9", display: "SỐ 9", emoji: "🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻 🌻", color: "bg-cyan-300" }, { word: "10", display: "SỐ 10", emoji: "🍓 🍓 🍓 🍓 🍓 🍓 🍓 🍓 🍓 🍓", color: "bg-indigo-300" } ]},
+                addition: { name: "➕ Phép cộng", color: "bg-teal-500", items: [ { word: "2", display: "1 + 1 =", emoji: "🍎 + 🍎", color: "bg-teal-300" }, { word: "3", display: "1 + 2 =", emoji: "🍌 + 🍌 🍌", color: "bg-yellow-300" }, { word: "4", display: "2 + 2 =", emoji: "🐶 🐶 + 🐶 🐶", color: "bg-orange-300" }, { word: "5", display: "2 + 3 =", emoji: "🐱 🐱 + 🐱 🐱 🐱", color: "bg-blue-300" }, { word: "6", display: "3 + 3 =", emoji: "🚗 🚗 🚗 + 🚗 🚗 🚗", color: "bg-red-300" } ]}
+            }
+        };
+
+        for (let cat in defaultVocabData.vi) {
+            if (defaultVocabData.en[cat]) {
+                defaultVocabData.vi[cat].items.forEach((item, idx) => {
+                    if (defaultVocabData.en[cat].items[idx] && !item.en) {
+                        item.en = defaultVocabData.en[cat].items[idx].word;
+                    }
+                });
+            }
+        }
+        
+        const searchContexts = { animals: "real photo animal high quality white background isolated", school: "real photo object high quality white background isolated", fruits: "real photo fruit high quality white background isolated", numbers: "3D cute number shiny isolated white background", colors: "paint splash color drop realistic isolated white background", family: "real photo person face friendly isolated white background", alphabet: "3D cute letter realistic isolated white background" };
+        for (let lang in defaultVocabData) { for (let cat in defaultVocabData[lang]) { defaultVocabData[lang][cat].searchContext = searchContexts[cat] || "cute illustration high quality white background isolated"; } }
+
+        let vocabData = JSON.parse(JSON.stringify(defaultVocabData));
+        const savedVocab = localStorage.getItem('KidsLearningApp_Data');
+        if (savedVocab) { try { vocabData = JSON.parse(savedVocab); } catch(e) {} }
+
+        function getImageUrl(wordObj, searchContext) {
+            if (wordObj.customSearch) {
+                const query = encodeURIComponent(wordObj.customSearch);
+                return `https://tse2.mm.bing.net/th?q=${query}&w=400&h=400&c=7&rs=1&p=0&dpr=1&pid=1.7&mkt=en-US&adlt=strict`;
+            }
+            let searchWord = wordObj.en ? wordObj.en : wordObj.word;
+            let queryStr = (searchContext && searchContext.trim() !== '') ? `${searchWord} ${searchContext}`.trim() : `${searchWord} cartoon cute clipart icon white background`.trim();
+            const query = encodeURIComponent(queryStr);
+            return `https://tse2.mm.bing.net/th?q=${query}&w=400&h=400&c=7&rs=1&p=0&dpr=1&pid=1.7&mkt=en-US&adlt=strict`;
+        }
+
+        const badgesConfig = [
+            { id: "draw_5", title: "Họa Sĩ Nhí", desc: "Vẽ thành công 5 bức tranh", icon: "🎨", reqDraws: 5, bg: "bg-blue-200", border: "border-blue-400" },
+            { id: "draw_20", title: "Picasso Nhí", desc: "Vẽ thành công 20 bức tranh", icon: "🖌️", reqDraws: 20, bg: "bg-purple-200", border: "border-purple-400" },
+            { id: "speak_10", title: "Loa Phóng Thanh", desc: "Phát âm chuẩn 10 từ", icon: "🗣️", reqSpeaks: 10, bg: "bg-green-200", border: "border-green-400" },
+            { id: "game_10", title: "Tai Thính Như Cáo", desc: "Đoán đúng 10 hình trong Trò chơi", icon: "🦊", reqGames: 10, bg: "bg-orange-200", border: "border-orange-400" },
+            { id: "coin_100", title: "Tỷ Phú Nhí", desc: "Tích lũy được 100 Đồng Xu", icon: "💰", reqCoins: 100, bg: "bg-yellow-200", border: "border-yellow-400" }
+        ];
+
+        let currentUser = localStorage.getItem('KidsLearningApp_CurrentUser');
+        let userProfiles = {};
+        try { userProfiles = JSON.parse(localStorage.getItem('KidsLearningPro_Users')) || {}; } catch(e) {}
+        
+        let collectedToys = []; let eggProgress = 0; let correctAnswers = 0;
+        let userData = { 
+            coins: 0, level: 1, inventory: {}, 
+            pet: { type: '🥚', level: 1 },
+            activeMascot: '🦉', 
+            hatchedPets: [], 
+            stats: { draws: 0, speaks: 0, games: 0 }, badges: [] 
+        };
+        
+        let voices = [], synth = window.speechSynthesis;
+        let confettiInterval = null; 
+        const toyList = ["🚗","🚜","🚁","🚀","🚂","🧸","🪀","🪁","👑","🦄","🦖","🤖"];
+        const petList = ["🐉","🐢","🦊","🐼","🐧","🦄","🐙","🐅","🦖","🦒"]; 
+        
+        let currentSubject = 'en', currentCategory = 'animals', currentMode = 'learn';
+        let isDarkMode = false;
+        let isGlobalMuted = false;
+        let lastGameTarget = null;
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function toggleSound() {
+            isGlobalMuted = !isGlobalMuted;
+            document.getElementById('soundBtn').innerText = isGlobalMuted ? '🔇' : '🔊';
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) bgMusic.muted = isGlobalMuted;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null; 
+        if(SpeechRecognition) { 
+            recognition = new SpeechRecognition(); 
+            recognition.continuous = false; 
+            recognition.interimResults = false; 
+            recognition.maxAlternatives = 5; 
+        } else {
+            window.addEventListener('DOMContentLoaded', () => {
+                const modeTestBtn = document.getElementById('modeTestBtn');
+                if(modeTestBtn) modeTestBtn.style.display = 'none';
+            });
+        }
+
+        function loadVoices() { voices = synth.getVoices(); }
+        if (synth.onvoiceschanged !== undefined) { synth.onvoiceschanged = loadVoices; }
+        loadVoices();
+
+        function playSound(type) {
+            if (isGlobalMuted) return;
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination);
+            if(type === 'pop') { osc.type = 'sine'; osc.frequency.setValueAtTime(400, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1); gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); osc.start(); osc.stop(audioCtx.currentTime + 0.1); }
+            else if (type === 'ting') { osc.type = 'triangle'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.3); gain.gain.setValueAtTime(0.6, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); osc.start(); osc.stop(audioCtx.currentTime + 0.5); }
+            else if (type === 'coin') { osc.type = 'square'; osc.frequency.setValueAtTime(1000, audioCtx.currentTime); osc.frequency.setValueAtTime(1500, audioCtx.currentTime + 0.05); gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.1); osc.start(); osc.stop(audioCtx.currentTime + 0.1); }
+            else if (type === 'fanfare') { 
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, i) => {
+                    const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.type = 'square'; o.connect(g); g.connect(audioCtx.destination);
+                    const start = audioCtx.currentTime + i * 0.15; o.frequency.setValueAtTime(freq, start);
+                    g.gain.setValueAtTime(0, start); g.gain.linearRampToValueAtTime(0.3, start + 0.05); g.gain.exponentialRampToValueAtTime(0.01, start + 0.4);
+                    o.start(start); o.stop(start + 0.5);
+                });
+            }
+        }
+
+        function playWelcomeMelody() {
+            if (isGlobalMuted) return;
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const notes = [523.25, 587.33, 659.25, 783.99, 1046.50]; 
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = 'triangle'; osc.connect(gain); gain.connect(audioCtx.destination);
+                const startTime = audioCtx.currentTime + i * 0.12; osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0, startTime); gain.gain.linearRampToValueAtTime(0.4, startTime + 0.05); gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+                osc.start(startTime); osc.stop(startTime + 0.5);
+            });
+        }
+
+        const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        class BubbleParticle {
+            constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 200; this.size = Math.random() * 20 + 10; this.speedY = Math.random() * -2 - 1; this.speedX = (Math.random() - 0.5) * 1; this.opacity = Math.random() * 0.4 + 0.1; }
+            update() { this.y += this.speedY; this.x += this.speedX; if (this.y < -50) { this.y = canvas.height + 50; this.x = Math.random() * canvas.width; } }
+            draw() { ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity + 0.2})`; ctx.stroke(); }
+        }
+        for(let i=0; i<25; i++) particles.push(new BubbleParticle());
+        function animateBg() { ctx.clearRect(0,0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateBg); }
+        animateBg();
+
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20; 
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            canvas.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                const x = Math.max(-20, Math.min(20, e.gamma || 0)); 
+                const y = Math.max(-20, Math.min(20, (e.beta || 0) - 45)); 
+                canvas.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+
+        function fireConfettiBatch() {
+            const emojis = ['🌸', '🌼', '🌺', '🎉', '✨', '🌻'];
+            for(let i = 0; i < 15; i++) {
+                let flower = document.createElement('div'); flower.className = 'falling-flower text-4xl md:text-5xl pointer-events-none';
+                flower.innerText = emojis[Math.floor(Math.random() * emojis.length)]; flower.style.left = Math.random() * 100 + 'vw'; flower.style.animationDuration = (Math.random() * 3 + 2) + 's'; flower.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(flower); setTimeout(() => flower.remove(), 6000); 
+            }
+        }
+        function startConfetti() { fireConfettiBatch(); confettiInterval = setInterval(fireConfettiBatch, 1000); }
+        function stopConfetti() { if (confettiInterval) { clearInterval(confettiInterval); confettiInterval = null; } }
+
+        function renderMascotImage(emoji, extraClass) {
+            extraClass = extraClass || '';
+            let baseClass = extraClass.indexOf('pet-image-3d') !== -1 ? extraClass : `w-24 h-24 md:w-32 md:h-32 ${extraClass}`;
+            if(pet3DImages[emoji]) {
+                return `<img src="${pet3DImages[emoji]}" class="${baseClass} object-contain" alt="${emoji}" onerror="this.outerHTML='<div class=\\'text-[80px] flex items-center justify-center ${baseClass}\\'>${emoji}</div>'">`;
+            }
+            return `<div class="text-[80px] flex items-center justify-center ${baseClass}">${emoji}</div>`;
+        }
+
+        function mascotReact(state, text) {
+            const bubble = document.getElementById('mascotBubble');
+            const body = document.getElementById('mascotBody');
+            let currentMascot = userData.activeMascot || '🦉';
+            
+            if (text) {
+                bubble.innerText = text;
+                bubble.innerHTML += `<div class="absolute -bottom-2 right-6 w-4 h-4 bg-white border-b-4 border-r-4 border-pink-300 transform rotate-45"></div>`;
+                bubble.classList.remove('hidden');
+            }
+            
+            body.classList.remove('anim-breathe', 'mascot-jumping');
+            if(state === 'happy') {
+                body.innerHTML = renderMascotImage(currentMascot) + '<div class="absolute -top-4 right-0 text-3xl">✨</div>';
+                body.classList.add('mascot-jumping'); hapticVibrate([50, 50, 50]); 
+            } else if(state === 'sad') {
+                body.innerHTML = renderMascotImage(currentMascot) + '<div class="absolute -top-4 right-0 text-3xl">💦</div>';
+                body.style.animation = 'shake 0.5s'; hapticVibrate([100]); 
+            } else if (state === 'idle') {
+                body.innerHTML = renderMascotImage(currentMascot);
+                body.classList.add('anim-breathe');
+            }
+
+            setTimeout(() => {
+                bubble.classList.add('hidden'); 
+                body.innerHTML = renderMascotImage(currentMascot); 
+                body.style.animation = '';
+                body.classList.remove('mascot-jumping'); body.classList.add('anim-breathe');
+            }, 3000);
+        }
+
+        function speakGreeting(name) {
+            if (isGlobalMuted) return;
+            if (synth.speaking) synth.cancel();
+            let vnText = `Xin chào. Chào mừng bé ${name} đến với trường học AI. Chúc bé học thật tốt nhé!`;
+            let enText = `Welcome ${name}, let's start learning!`;
+            let utteranceVN = new SpeechSynthesisUtterance(vnText); utteranceVN.lang = 'vi-VN'; utteranceVN.pitch = 1.3; utteranceVN.rate = 0.9; 
+            if(voices.length === 0) loadVoices();
+            let viVoices = voices.filter(v => v.lang && v.lang.indexOf('vi') !== -1);
+            let viVoice = viVoices.find(v => v.name.toLowerCase().indexOf('female') !== -1 || v.name.indexOf('HoaiMy') !== -1 || v.name.indexOf('Linh') !== -1 || v.name.indexOf('Mai') !== -1);
+            if(!viVoice) viVoice = viVoices.find(v => v.name.indexOf('Nam') === -1); if(!viVoice && viVoices.length > 0) viVoice = viVoices[0]; if(viVoice) utteranceVN.voice = viVoice;
+
+            let utteranceEN = new SpeechSynthesisUtterance(enText); utteranceEN.lang = 'en-US'; utteranceEN.pitch = 1.3; utteranceEN.rate = 0.9;
+            let enVoices = voices.filter(v => v.lang && v.lang.indexOf('en') !== -1); let enVoice = enVoices.find(v => v.name.toLowerCase().indexOf('female') !== -1 || v.name.indexOf('Samantha') !== -1 || v.name.indexOf('Salli') !== -1 || v.name.indexOf('Google') !== -1); if(enVoice) utteranceEN.voice = enVoice;
+
+            utteranceEN.onend = function() { stopConfetti(); mascotReact('idle'); }; setTimeout(() => { stopConfetti(); }, 12000);
+            synth.speak(utteranceVN); synth.speak(utteranceEN);
+        }
+
+        function saveUsersData() {
+            if (currentUser) {
+                if (!userProfiles[currentUser]) {
+                    userProfiles[currentUser] = { toys: [], eggProgress: 0, coins: 0, level: 1, inventory: {}, pet: {type: '🥚', level: 1}, activeMascot: '🦉', hatchedPets: [], stats: {draws:0, speaks:0, games:0}, badges: [] };
+                }
+                userProfiles[currentUser].toys = collectedToys; userProfiles[currentUser].eggProgress = eggProgress;
+                userProfiles[currentUser].coins = userData.coins; userProfiles[currentUser].level = userData.level; 
+                userProfiles[currentUser].inventory = userData.inventory; userProfiles[currentUser].pet = userData.pet;
+                userProfiles[currentUser].stats = userData.stats; userProfiles[currentUser].badges = userData.badges;
+                userProfiles[currentUser].activeMascot = userData.activeMascot;
+                userProfiles[currentUser].hatchedPets = userData.hatchedPets;
+
+                localStorage.setItem('KidsLearningPro_Users', JSON.stringify(userProfiles));
+                updateUI();
+                checkBadges(); 
+            }
+        }
+
+        function checkBadges() {
+            if(!userData.badges) userData.badges = [];
+            if(!userData.stats) userData.stats = {draws:0, speaks:0, games:0};
+
+            let newlyUnlocked = null;
+
+            badgesConfig.forEach(badge => {
+                if(userData.badges.indexOf(badge.id) === -1) {
+                    let isUnlocked = false;
+                    if(badge.reqDraws && userData.stats.draws >= badge.reqDraws) isUnlocked = true;
+                    if(badge.reqSpeaks && userData.stats.speaks >= badge.reqSpeaks) isUnlocked = true;
+                    if(badge.reqGames && userData.stats.games >= badge.reqGames) isUnlocked = true;
+                    if(badge.reqCoins && userData.coins >= badge.reqCoins) isUnlocked = true;
+
+                    if(isUnlocked) {
+                        userData.badges.push(badge.id);
+                        newlyUnlocked = badge; 
+                    }
+                }
+            });
+
+            if(newlyUnlocked) {
+                showBadgeCelebration(newlyUnlocked);
+                saveUsersData(); 
+            }
+        }
+
+        function showBadgeCelebration(badge) {
+            playSound('fanfare');
+            startConfetti();
+            hapticVibrate([100, 50, 100, 50, 200]); 
+            
+            const celebModal = document.getElementById('badgeCelebration');
+            document.getElementById('celebrationBadgeIcon').innerText = badge.icon;
+            document.getElementById('celebrationBadgeDesc').innerText = `Bé nhận được huy hiệu ${badge.title}`;
+            
+            celebModal.classList.remove('hidden');
+            const icon = document.getElementById('celebrationBadgeIcon');
+            icon.classList.remove('badge-appear-anim');
+            void icon.offsetWidth;
+            icon.classList.add('badge-appear-anim');
+
+            setTimeout(() => { celebModal.classList.add('hidden'); stopConfetti(); }, 4000);
+        }
+
+        function openBadgeModal() {
+            document.getElementById('badgeModal').classList.remove('hidden');
+            document.getElementById('mascot').classList.add('hidden'); 
+            
+            const container = document.getElementById('badgeContainer'); container.innerHTML = '';
+            document.getElementById('unlockedBadgeCount').innerText = userData.badges.length;
+            document.getElementById('totalBadgeCount').innerText = badgesConfig.length;
+
+            badgesConfig.forEach(badge => {
+                let isUnlocked = userData.badges.indexOf(badge.id) !== -1;
+                let stateClass = isUnlocked ? `badge-unlocked ${badge.bg} ${badge.border}` : `badge-locked bg-gray-200 border-gray-400`;
+                let titleColor = isUnlocked ? 'text-slate-800' : 'text-slate-400';
+                
+                let div = document.createElement('div');
+                div.className = `p-4 rounded-2xl text-center border-4 ${stateClass} flex flex-col items-center justify-center min-h-[140px]`;
+                div.innerHTML = `
+                    <div class="text-5xl mb-2 filter drop-shadow-md">${badge.icon}</div>
+                    <div class="font-bold ${titleColor} text-sm leading-tight">${badge.title}</div>
+                    ${!isUnlocked ? `<div class="absolute inset-0 flex items-center justify-center"><div class="text-4xl">🔒</div></div>` : ''}
+                `;
+                div.onclick = () => { alert(`${badge.title}\nĐiều kiện: ${badge.desc}`); }
+                container.appendChild(div);
+            });
+        }
+
+        function renderLeaderboard() {
+            const listContainer = document.getElementById('userListContainer');
+            const leaderboardList = document.getElementById('leaderboardList');
+            const users = Object.keys(userProfiles);
+            
+            if(users.length > 0) {
+                listContainer.classList.remove('hidden');
+                leaderboardList.innerHTML = '';
+                
+                let leaderboardData = [];
+                users.forEach(name => {
+                    leaderboardData.push({
+                        name: name,
+                        coins: userProfiles[name].coins || 0,
+                        level: userProfiles[name].level || 1,
+                        badgesCount: (userProfiles[name].badges || []).length
+                    });
+                });
+                
+                leaderboardData.sort((a, b) => {
+                    if (b.coins !== a.coins) return b.coins - a.coins;
+                    return b.level - a.level;
+                });
+                
+                leaderboardData.forEach((user, index) => {
+                    let rankClass = "lb-rank-other";
+                    let rankIcon = `#${index + 1}`;
+                    
+                    if (index === 0) { rankClass = "lb-rank-1"; rankIcon = "🥇"; }
+                    else if (index === 1) { rankClass = "lb-rank-2"; rankIcon = "🥈"; }
+                    else if (index === 2) { rankClass = "lb-rank-3"; rankIcon = "🥉"; }
+
+                    let div = document.createElement('div');
+                    div.className = `leaderboard-row ${rankClass}`;
+                    
+                    div.onclick = () => { document.getElementById('loginName').value = user.name; login(); };
+                    
+                    div.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl w-8 text-center">${rankIcon}</span>
+                            <span class="text-xl text-slate-700">${user.name}</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-sm text-pink-600 bg-white/50 px-2 rounded-lg">Cấp ${user.level}</span>
+                            <span class="text-amber-600 text-lg flex items-center">${user.coins} <div class="coin-icon scale-75 ml-1">¢</div></span>
+                        </div>
+                    `;
+                    leaderboardList.appendChild(div);
+                });
+            }
+        }
+
+        function login() {
+            const name = document.getElementById('loginName').value.trim();
+            if (!name) { alert("Ba mẹ nhớ nhập tên của bé nhé!"); return; }
+            currentUser = name.toUpperCase(); localStorage.setItem('KidsLearningApp_CurrentUser', currentUser);
+            
+            // FIX iOS 12: Kích hoạt user-gesture ngay lập tức tại hàm login
+            if(audioCtx.state === 'suspended') { audioCtx.resume(); }
+            if (synth.speaking) synth.cancel(); let wakeup = new SpeechSynthesisUtterance(''); wakeup.volume = 0; synth.speak(wakeup);
+            const bgMusic = document.getElementById('bgMusic'); 
+            if(bgMusic && !isGlobalMuted) { bgMusic.volume = 0.3; let playPromise = bgMusic.play(); if (playPromise !== undefined) { playPromise.catch(e => console.log("Safari chặn")); } }
+
+            if (!userProfiles[currentUser]) { userProfiles[currentUser] = { toys: [], eggProgress: 0, coins: 0, level: 1, inventory: {}, pet: {type: '🥚', level: 1}, activeMascot: '🦉', hatchedPets: [], stats: {draws:0, speaks:0, games:0}, badges: [] }; }
+            
+            collectedToys = userProfiles[currentUser].toys || []; eggProgress = userProfiles[currentUser].eggProgress || 0;
+            userData.coins = userProfiles[currentUser].coins || 0; userData.level = userProfiles[currentUser].level || 1; 
+            userData.inventory = userProfiles[currentUser].inventory || {}; userData.pet = userProfiles[currentUser].pet || {type: '🥚', level: 1};
+            
+            userData.activeMascot = userProfiles[currentUser].activeMascot || '🦉';
+            userData.hatchedPets = userProfiles[currentUser].hatchedPets || [];
+            if(userData.hatchedPets.indexOf('🦉') === -1) userData.hatchedPets.unshift('🦉'); 
+
+            userData.stats = userProfiles[currentUser].stats || {draws:0, speaks:0, games:0};
+            userData.badges = userProfiles[currentUser].badges || [];
+
+            correctAnswers = 0;
+            
+            document.getElementById('welcomeName').innerText = currentUser; saveUsersData(); updateRewardProgress(); 
+            playWelcomeMelody(); startConfetti();
+            
+            document.getElementById('loginModal').classList.add('opacity-0');
+            setTimeout(() => {
+                document.getElementById('loginModal').classList.add('hidden'); 
+                document.getElementById('topBar').classList.remove('hidden'); 
+                document.getElementById('mascot').classList.remove('hidden');
+                document.getElementById('mainAppContent').classList.remove('hidden');
+                setTimeout(() => document.getElementById('mainAppContent').classList.remove('opacity-0'), 50);
+            }, 500);
+            setTimeout(() => { speakGreeting(currentUser); mascotReact('happy', 'Chào bé ' + currentUser + '!'); }, 1500); 
+        }
+
+        function logout() {
+            currentUser = null; localStorage.removeItem('KidsLearningApp_CurrentUser'); document.getElementById('loginName').value = ''; renderLeaderboard(); 
+            document.getElementById('mainAppContent').classList.add('opacity-0'); document.getElementById('topBar').classList.add('hidden');
+            document.getElementById('mascot').classList.add('hidden');
+            setTimeout(() => { document.getElementById('mainAppContent').classList.add('hidden'); document.getElementById('loginModal').classList.remove('hidden'); setTimeout(() => document.getElementById('loginModal').classList.remove('opacity-0'), 50); }, 500);
+            stopConfetti(); const bgMusic = document.getElementById('bgMusic'); if(bgMusic) bgMusic.pause();
+        }
+
+        window.onload = () => {
+            if (currentUser) {
+                if (!userProfiles[currentUser]) { userProfiles[currentUser] = { toys: [], eggProgress: 0, coins:0, level:1, inventory:{}, pet:{type:'🥚',level:1}, activeMascot:'🦉', hatchedPets:['🦉'], stats:{draws:0, speaks:0, games:0}, badges:[] }; saveUsersData(); }
+                document.getElementById('loginModal').classList.add('hidden'); 
+                document.getElementById('topBar').classList.remove('hidden');
+                document.getElementById('mascot').classList.remove('hidden');
+                document.getElementById('mainAppContent').classList.remove('hidden'); document.getElementById('mainAppContent').classList.remove('opacity-0');
+                document.getElementById('welcomeName').innerText = currentUser;
+                
+                collectedToys = userProfiles[currentUser].toys || []; eggProgress = userProfiles[currentUser].eggProgress || 0;
+                userData.coins = userProfiles[currentUser].coins || 0; userData.level = userProfiles[currentUser].level || 1; userData.inventory = userProfiles[currentUser].inventory || {}; userData.pet = userProfiles[currentUser].pet || {type: '🥚', level: 1};
+                userData.activeMascot = userProfiles[currentUser].activeMascot || '🦉';
+                userData.hatchedPets = userProfiles[currentUser].hatchedPets || ['🦉'];
+                userData.stats = userProfiles[currentUser].stats || {draws:0, speaks:0, games:0};
+                userData.badges = userProfiles[currentUser].badges || [];
+                
+                updateUI();
+                mascotReact('happy', 'Học thôi nào!');
+            } else { renderLeaderboard(); } 
+            updateCloudCategories(); 
+            
+            setSubject('vi'); 
+            setCategory('alphabet');
+            setupDrawing();
+        };
+
+        function updateUI() { if(!currentUser) return; document.getElementById('coinCount').innerText = userData.coins; document.getElementById('shopCoinDisplay').innerText = userData.coins; }
+
+        function updateRewardProgress() {
+            if(!currentUser) return;
+            let currentExp = correctAnswers % 5; let left = 5 - currentExp;
+            document.getElementById('rewardProgressBar').style.width = (currentExp * 20) + "%"; document.getElementById('starsLeft').innerText = left; document.getElementById('userLevelBadge').innerText = userData.level;
+            
+            if(currentExp === 0 && correctAnswers > 0) {
+                document.getElementById('rewardProgressBar').style.width = "100%";
+                userData.coins += 10; userData.level++; playSound('coin'); saveUsersData();
+                mascotReact('happy', 'Lên cấp rồi! Đỉnh quá!');
+                setTimeout(() => { document.getElementById('rewardSelectModal').classList.remove('hidden'); document.getElementById('mascot').classList.add('hidden'); playSound('ting'); }, 1500);
+            }
+        }
+
+        function setMode(mode) {
+            if (mode === 'test' && !recognition) { alert("Trình duyệt chưa hỗ trợ chấm điểm giọng nói (Safari cũ). Dùng Chrome nhé!"); return; }
+            currentMode = mode;
+            
+            const container = document.getElementById('cardContainer');
+            if(container) container.classList.remove('focus-mode');
+
+            ['learn', 'test', 'draw', 'game'].forEach(m => {
+                let btn = document.getElementById('mode' + m.charAt(0).toUpperCase() + m.slice(1) + 'Btn');
+                if(btn) {
+                    if (m === mode) {
+                        btn.className = `nav-btn px-5 py-3 m-1 rounded-full text-lg font-bold border-4 text-white active border-[#ffe066] ${m==='learn'?'bg-pink-500': m==='test'?'bg-orange-500': m==='draw'?'bg-green-500':'bg-blue-500'}`;
+                    } else {
+                        btn.className = `nav-btn bg-white text-gray-500 px-5 py-3 m-1 rounded-full text-lg font-bold border-4 border-white`;
+                    }
+                }
+            });
+
+            document.getElementById('cardContainer').classList.add('hidden');
+            document.getElementById('drawingArea').classList.add('hidden');
+            document.getElementById('gameArea').classList.add('hidden');
+            
+            if(mode === 'draw') { 
+                document.getElementById('drawingArea').classList.remove('hidden'); document.getElementById('drawingArea').classList.add('flex'); prepareDraw(); mascotReact('idle', 'Hãy vẽ thật đẹp nhé!'); 
+            }
+            else if(mode === 'game') {
+                document.getElementById('gameArea').classList.remove('hidden'); document.getElementById('gameArea').classList.add('flex'); prepareGame(); 
+            }
+            else { 
+                document.getElementById('cardContainer').classList.remove('hidden'); renderCards(); mascotReact('idle'); 
+            }
+        }
+
+        function setSubject(subjectKey) {
+            currentSubject = subjectKey; 
+            const container = document.getElementById('cardContainer');
+            if(container) container.classList.remove('focus-mode');
+
+            document.querySelectorAll('.subj-btn').forEach(btn => { btn.classList.remove('active', 'bg-pink-500', 'bg-blue-500', 'text-white'); btn.classList.add('bg-white', 'text-gray-500'); });
+            const activeBtn = document.getElementById(`subj-${subjectKey}`); 
+            if(activeBtn) { activeBtn.classList.remove('bg-white', 'text-gray-500'); activeBtn.classList.add('active', 'text-white', subjectKey === 'en' ? 'bg-pink-500' : 'bg-blue-500'); }
+            const cats = Object.keys(vocabData[subjectKey]); currentCategory = cats[0]; renderCategoryTabs(); 
+            
+            if (currentMode === 'game') { prepareGame(); } 
+            else if (currentMode === 'draw') { prepareDraw(); } 
+            else { renderCards(); }
+        }
+        
+        function setCategory(catKey) { 
+            currentCategory = catKey; 
+            const container = document.getElementById('cardContainer');
+            if(container) container.classList.remove('focus-mode');
+            
+            renderCategoryTabs(); 
+            if (currentMode === 'game') { prepareGame(); } 
+            else if (currentMode === 'draw') { prepareDraw(); } 
+            else { renderCards(); }
+        }
+        
+        function renderCategoryTabs() {
+            const container = document.getElementById('categoryTabs'); if(!container) return; container.innerHTML = ''; const cats = vocabData[currentSubject];
+            for(let key in cats) {
+                const btn = document.createElement('button'); const isActive = (key === currentCategory);
+                btn.className = `nav-btn px-5 py-2 m-2 rounded-full text-md font-bold border-4 border-white text-white shadow-md ${cats[key].color} ${isActive ? 'active scale-110' : 'opacity-80 hover:opacity-100'}`;
+                btn.innerText = cats[key].name; btn.onclick = () => setCategory(key); container.appendChild(btn);
+            }
+        }
+
+        function prepareGame() {
+            const items = vocabData[currentSubject][currentCategory].items;
+            if(items.length < 4) { alert("Chủ đề này hơi ít từ. Bé chọn chủ đề khác để chơi nhé!"); setMode('learn'); return; }
+            
+            let availableTargets = items.filter(i => lastGameTarget ? i.word !== lastGameTarget.word : true);
+            if(availableTargets.length === 0) availableTargets = items;
+
+            let targetItem = availableTargets[Math.floor(Math.random() * availableTargets.length)];
+            currentGameTarget = targetItem;
+            lastGameTarget = targetItem;
+
+            let otherItems = items.filter(i => i.word !== targetItem.word).sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            let selected = [targetItem, otherItems[0], otherItems[1], otherItems[2]].sort(() => 0.5 - Math.random());
+            
+            const gameBoard = document.getElementById('gameBoard'); gameBoard.innerHTML = '';
+            const searchCtx = vocabData[currentSubject][currentCategory].searchContext;
+            selected.forEach((item, index) => {
+                let imgUrl = getImageUrl(item, searchCtx);
+                let visualContent = '';
+                if (currentCategory === 'addition' || currentSubject === 'math') { 
+                    visualContent = `<div class="text-4xl md:text-5xl drop-shadow-md text-center" style="line-height:1.2;">${item.emoji.replace(/\+/g, '<span class="text-slate-500 mx-1">+</span>')}</div>`;
+                } else if (currentCategory === 'alphabet') {
+                    visualContent = `<div class="text-[70px] md:text-[90px] font-bold text-indigo-600 drop-shadow-sm leading-none" style="-webkit-text-stroke: 1.5px white;">${item.display.split(' ')[0]}</div>`;
+                } else {
+                    visualContent = `<img src="${imgUrl}" alt="${item.word}" class="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-lg rounded-2xl bg-white/80 p-1 md:p-2 border-4 border-white/50 pointer-events-none" onerror="this.outerHTML='<div class=\'text-6xl md:text-7xl\'>${item.emoji}</div>'">`;
+                }
+                let card = document.createElement('div');
+                let colorBorderClass = item.color.replace('bg-', 'border-');
+                card.className = `nav-btn w-32 h-32 md:w-44 md:h-44 flex items-center justify-center rounded-3xl bg-white border-8 ${colorBorderClass} cursor-pointer hover:scale-105`;
+                card.innerHTML = visualContent;
+                card.onclick = () => checkGameAnswer(item);
+                gameBoard.appendChild(card);
+            });
+            setTimeout(() => { playTargetSound(); }, 500);
+        }
+
+        function playTargetSound() {
+            if(!currentGameTarget || isGlobalMuted) return;
+            const langCode = currentSubject === 'en' ? 'en-US' : 'vi-VN';
+            let displayWord = currentGameTarget.display || currentGameTarget.word;
+            mascotReact('idle', `Đâu là "${displayWord}" nhỉ?`);
+            if (currentGameTarget.sfx) {
+                let sound = new Audio(currentGameTarget.sfx); sound.volume = 0.5;
+                let playPromise = sound.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => { setTimeout(() => speakWord(currentGameTarget.word, langCode), 1500); }).catch(error => { playSound('ting'); speakWord(currentGameTarget.word, langCode); });
+                }
+            } else {
+                playSound('ting'); speakWord(currentGameTarget.word, langCode);
+            }
+        }
+
+        function checkGameAnswer(clickedItem) {
+            if(clickedItem.word === currentGameTarget.word) {
+                playSfx('coin'); correctAnswers++; 
+                userData.stats.games++; 
+                updateRewardProgress();
+                saveUsersData(); 
+
+                mascotReact('happy', 'Chính xác! Bé xuất sắc quá! 🌟');
+                fireConfettiBatch();
+                setTimeout(() => prepareGame(), 1500);
+            } else {
+                playSfx('pop'); mascotReact('sad', 'Chưa đúng rồi, bé thử lại nhé!');
+                const board = document.getElementById('gameBoard');
+                board.classList.remove('shake-animation'); void board.offsetWidth; board.classList.add('shake-animation');
+            }
+        }
+
+        function renderCards() {
+            const container = document.getElementById('cardContainer'); if(!container) return; container.innerHTML = '';
+            if(!vocabData[currentSubject] || !vocabData[currentSubject][currentCategory]) return;
+            container.classList.remove('focus-mode'); 
+
+            const items = vocabData[currentSubject][currentCategory].items || []; const langCode = currentSubject === 'en' ? 'en-US' : 'vi-VN';
+            
+            const isTestMode = currentMode === 'test';
+            const shouldHideText = isTestMode && ['alphabet', 'numbers', 'addition'].indexOf(currentCategory) === -1;
+            
+            const searchCtx = vocabData[currentSubject][currentCategory].searchContext;
+            
+            items.forEach((item, index) => {
+                const scene = document.createElement('div'); scene.className = 'scene m-2 w-[42%] max-w-[180px] h-48 md:w-56 md:h-64 flex-shrink-0';
+                const displayWord = item.display ? item.display : item.word; 
+                
+                const showText = shouldHideText ? '???' : displayWord;
+                
+                let isMathAddition = currentCategory === 'addition';
+                let visualContent = '';
+                
+                if (isMathAddition) { 
+                    visualContent = `<div class="text-4xl md:text-5xl flex-shrink-0 drop-shadow-md text-center">${item.emoji.replace(/\+/g, '<span class="text-white text-3xl drop-shadow-md mx-2">+</span>')}</div>`;
+                } else if (currentCategory === 'alphabet') {
+                    visualContent = `<div class="text-[90px] md:text-[110px] font-bold text-white drop-shadow-md leading-none" style="-webkit-text-stroke: 2px rgba(0,0,0,0.15);">${item.display.split(' ')[0]}</div>`;
+                } else {
+                    let iconOpacity = shouldHideText ? 'opacity-30' : 'opacity-100';
+                    let imgUrl = getImageUrl(item, searchCtx);
+                    visualContent = `<img src="${imgUrl}" alt="${item.word}" class="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-lg rounded-2xl bg-white/80 p-2 border-4 border-white/50 ${iconOpacity}" onerror="this.outerHTML='<div class=\'text-6xl md:text-7xl ${iconOpacity}\'>${item.emoji}</div>'">`;
+                }
+                
+                let replayBtnHtml = '';
+                if (isTestMode) { replayBtnHtml = `<button type="button" class="replay-btn absolute top-2 right-2 w-10 h-10 bg-white/90 backdrop-blur rounded-full shadow-md flex items-center justify-center text-xl hover:bg-blue-100 transition-all z-20 pointer-events-auto">🔊</button>`; }
+
+                let backContent = '';
+                if (currentCategory === 'alphabet') {
+                    let backImg = getImageUrl(item, searchCtx);
+                    let exampleWord = item.word; 
+                    if (currentSubject === 'vi' && item.vi_word) { exampleWord = item.vi_word; } 
+                    else if (currentSubject === 'en' && item.en) { exampleWord = item.en; }
+                    
+                    backContent = `
+                        <div class="text-4xl md:text-5xl cartoon-text word-text flex-shrink-0 leading-tight text-slate-800 mb-2" style="-webkit-text-stroke: 1px white;">${displayWord}</div>
+                        <img src="${backImg}" class="w-16 h-16 md:w-24 md:h-24 object-contain" onerror="this.outerHTML='<div class=\'text-4xl\'>${item.emoji}</div>'">
+                        <div class="text-sm md:text-base font-bold text-slate-500 mt-2">${exampleWord}</div>
+                    `;
+                } else {
+                    backContent = `
+                        <div class="text-3xl md:text-4xl cartoon-text word-text flex-shrink-0 leading-tight text-slate-800" style="-webkit-text-stroke: 1px white;">${displayWord}</div>
+                        <div class="text-4xl mt-3 opacity-30">${item.emoji}</div>
+                    `;
+                }
+
+                scene.innerHTML = `
+                    <div class="card-3d">
+                        <div class="card-face card-front flex flex-col items-center justify-center p-2 ${item.color}">
+                            ${replayBtnHtml}
+                            <div class="emoji-float mb-2" style="animation-delay: ${index * 0.15}s">${visualContent}</div>
+                            ${shouldHideText ? `<div class="text-4xl cartoon-text word-text flex-shrink-0 leading-tight">???</div>` : `<div class="text-sm md:text-lg cartoon-text text-white opacity-90 mt-2 font-normal" style="-webkit-text-stroke:0px;">(Chạm Lật)</div>`}
+                        </div>
+                        <div class="card-face card-back flex flex-col items-center justify-center p-4">
+                            ${backContent}
+                        </div>
+                    </div>
+                `;
+                
+                const card3d = scene.querySelector('.card-3d');
+                scene.onclick = (e) => { 
+                    if (isTestMode) checkPronunciation(scene, item.word, displayWord, langCode); 
+                    else { 
+                        let isFlipped = card3d.classList.toggle('is-flipped');
+                        if (isFlipped) {
+                            document.querySelectorAll('.scene.focused-card').forEach(other => {
+                                if(other !== scene) {
+                                    other.querySelector('.card-3d').classList.remove('is-flipped');
+                                    other.classList.remove('focused-card');
+                                }
+                            });
+
+                            document.getElementById('cardContainer').classList.add('focus-mode');
+                            scene.classList.add('focused-card');
+                            
+                            if (item.sfx && !isGlobalMuted) {
+                                let sound = new Audio(item.sfx); sound.volume = 0.5;
+                                let playPromise = sound.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.then(_ => { setTimeout(() => speakWord(item.word, langCode), 1500); }).catch(error => { playSound('pop'); speakWord(item.word, langCode); });
+                                }
+                            } else {
+                                playSound('pop'); speakWord(item.word, langCode);
+                            }
+                        } else {
+                            scene.classList.remove('focused-card');
+                            if(document.querySelectorAll('.scene.focused-card').length === 0) {
+                                document.getElementById('cardContainer').classList.remove('focus-mode');
+                            }
+                        }
+                    } 
+                };
+
+                if (isTestMode) {
+                    const replayBtn = scene.querySelector('.replay-btn');
+                    if (replayBtn) {
+                        replayBtn.onmousedown = (e) => e.stopPropagation(); replayBtn.ontouchstart = (e) => e.stopPropagation();
+                        replayBtn.onclick = (e) => { e.stopPropagation(); if(recognition) { try { recognition.abort(); } catch(err) {} } document.querySelectorAll('.scene.listening').forEach(c => c.classList.remove('listening')); playSound('ting'); setTimeout(() => { speakWord(item.word, langCode); mascotReact('idle', 'Lắng nghe kỹ nhé...'); }, 100); };
+                    }
+                }
+                container.appendChild(scene);
+            });
+        }
+
+        const phoneticDict = { "A": "a", "Ă": "á", "Â": "ớ", "B": "bờ", "C": "cờ", "D": "dờ", "Đ": "đờ", "E": "e", "Ê": "ê", "G": "gờ", "H": "hờ", "I": "i", "K": "ca", "L": "lờ", "M": "mờ", "N": "nờ", "O": "o", "Ô": "ô", "Ơ": "ơ", "P": "pờ", "Q": "cu", "R": "rờ", "S": "sờ", "T": "tờ", "U": "u", "Ư": "ư", "V": "vờ", "X": "xờ", "Y": "i" };
+
+        function speakWord(word, langCode) {
+            if (isGlobalMuted) return;
+            if (synth.speaking) synth.cancel();
+            let textToSpeak = (langCode === 'vi-VN' && word.length === 1 && phoneticDict[word.toUpperCase()]) ? phoneticDict[word.toUpperCase()] : word;
+            
+            const utterance = new SpeechSynthesisUtterance(textToSpeak); 
+            utterance.lang = langCode; 
+            utterance.volume = 1.0; 
+            utterance.pitch = 1.1;  
+            utterance.rate = 0.85;  
+            
+            if(voices.length === 0) loadVoices();
+            
+            if(langCode === 'vi-VN') { 
+                let viVoices = voices.filter(v => v.lang && v.lang.indexOf('vi') !== -1); 
+                let viVoice = viVoices.find(v => v.name.toLowerCase().indexOf('female') !== -1 || v.name.indexOf('HoaiMy') !== -1 || v.name.indexOf('Linh') !== -1 || v.name.indexOf('Mai') !== -1); 
+                if(!viVoice && viVoices.length > 0) viVoice = viVoices[0];
+                if(viVoice) utterance.voice = viVoice; 
+            } else { 
+                let enVoices = voices.filter(v => v.lang && (v.lang.indexOf('en-US') !== -1 || v.lang.indexOf('en-GB') !== -1)); 
+                let enVoice = enVoices.find(v => v.name.indexOf('Google US English') !== -1 || v.name.indexOf('Samantha') !== -1 || v.name.indexOf('Alex') !== -1 || v.name.indexOf('Daniel') !== -1); 
+                if(!enVoice && enVoices.length > 0) enVoice = enVoices[0];
+                if(enVoice) utterance.voice = enVoice; 
+            }
+            
+            synth.speak(utterance);
+        }
+
+        function similarity(s1, s2) { let longer = s1, shorter = s2; if (s1.length < s2.length) { longer = s2; shorter = s1; } let longerLength = longer.length; if (longerLength == 0) return 1.0; return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength); }
+        function editDistance(s1, s2) { let costs = []; for (let i = 0; i <= s1.length; i++) { let lastValue = i; for (let j = 0; j <= s2.length; j++) { if (i == 0) costs[j] = j; else { if (j > 0) { let newValue = costs[j - 1]; if (s1.charAt(i - 1) != s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1; costs[j - 1] = lastValue; lastValue = newValue; } } } if (i > 0) costs[s2.length] = lastValue; } return costs[s2.length]; }
+
+        function checkPronunciation(cardElement, correctWord, originalWord, langCode) {
+            if(!recognition) return; synth.cancel(); try { recognition.abort(); } catch(e) {}
+            
+            document.querySelectorAll('.scene.focused-card').forEach(c => {
+                c.classList.remove('listening', 'focused-card');
+            });
+
+            setTimeout(() => {
+                cardElement.classList.add('listening', 'focused-card');
+                document.getElementById('cardContainer').classList.add('focus-mode');
+                recognition.lang = langCode;
+                
+                recognition.onresult = (event) => {
+                    let bestMatchScore = 0; let heardWord = ""; let targetWord = correctWord.toUpperCase();
+                    for(let i=0; i<event.results[0].length; i++) { 
+                        let transcript = event.results[0][i].transcript.trim().toUpperCase().replace(/[.,!?]/g, ""); 
+                        let score = similarity(transcript, targetWord); 
+                        if(transcript.indexOf(targetWord) !== -1 && score < 0.7) score = 0.9; 
+                        if(targetWord.length <= 2 && transcript.indexOf(targetWord) !== -1) score = 1.0; 
+                        if (score > bestMatchScore) { bestMatchScore = score; heardWord = transcript; } 
+                    }
+                    
+                    let feedbackText = cardElement.querySelector('.feedback-text'); 
+                    if(!feedbackText) { feedbackText = document.createElement('div'); feedbackText.className = 'feedback-text'; cardElement.appendChild(feedbackText); }
+                    
+                    if(bestMatchScore >= 0.70) {
+                        playSound('ting'); speakWord(langCode === 'vi-VN' ? "Tuyệt vời!" : "Excellent!", langCode);
+                        cardElement.querySelectorAll('.word-text').forEach(el => el.textContent = originalWord); 
+                        cardElement.querySelector('.card-3d').classList.add('is-flipped');
+                        feedbackText.innerHTML = "🏆 XUẤT SẮC! 🌟"; feedbackText.style.color = "#15803d"; feedbackText.style.background = "#bbf7d0";
+                        mascotReact('happy', 'Thật xuất sắc! 🏆'); 
+                        correctAnswers++; userData.stats.speaks++; updateRewardProgress(); saveUsersData();
+                    } else if (bestMatchScore >= 0.45) {
+                        playSound('ting'); speakWord(langCode === 'vi-VN' ? "Gần đúng rồi!" : "Good try!", langCode);
+                        cardElement.querySelectorAll('.word-text').forEach(el => el.textContent = originalWord); 
+                        cardElement.querySelector('.card-3d').classList.add('is-flipped');
+                        feedbackText.innerHTML = `👍 Khá tốt! (Nghe: ${heardWord})`; feedbackText.style.color = "#b45309"; feedbackText.style.background = "#fef08a";
+                        mascotReact('idle', 'Gần đúng rồi! Cố lên!'); 
+                        correctAnswers++; updateRewardProgress();
+                    } else {
+                        playSound('pop'); feedbackText.textContent = `Nghe: "${heardWord}" - Thử lại!`; feedbackText.style.color = "#b91c1c"; feedbackText.style.background = "#fecaca";
+                        mascotReact('sad', 'Sai mất rồi. Thử lại nhé!');
+                    }
+                    setTimeout(() => feedbackText.classList.add('show'), 50); 
+                    
+                    setTimeout(() => { 
+                        feedbackText.classList.remove('show'); 
+                        cardElement.classList.remove('listening', 'focused-card'); 
+                        if(document.querySelectorAll('.scene.focused-card').length === 0) {
+                            document.getElementById('cardContainer').classList.remove('focus-mode');
+                        }
+                    }, 3500);
+                };
+                recognition.onerror = () => { 
+                    cardElement.classList.remove('listening', 'focused-card'); 
+                    document.getElementById('cardContainer').classList.remove('focus-mode');
+                    mascotReact('idle', 'Bé nói to lên chút nhé!'); 
+                }; 
+                recognition.onend = () => { cardElement.classList.remove('listening'); };
+                try { recognition.start(); } catch(e) {}
+            }, 100);
+        }
+
+        const drawCanvas = document.getElementById('drawingCanvas'); const dCtx = drawCanvas.getContext('2d');
+        let isDrawing = false, currentDrawWord = "";
+        
+        function setupDrawing() {
+            drawCanvas.addEventListener('mousedown', startDraw); drawCanvas.addEventListener('mousemove', draw); drawCanvas.addEventListener('mouseup', stopDraw); drawCanvas.addEventListener('mouseout', stopDraw);
+            drawCanvas.addEventListener('touchstart', (e)=>{ e.preventDefault(); startDraw(e.touches[0]); }, {passive: false}); drawCanvas.addEventListener('touchmove', (e)=>{ e.preventDefault(); draw(e.touches[0]); }, {passive: false}); drawCanvas.addEventListener('touchend', stopDraw);
+        }
+        function getPos(e) { const rect = drawCanvas.getBoundingClientRect(); return { x: (e.clientX - rect.left) * (drawCanvas.width/rect.width), y: (e.clientY - rect.top) * (drawCanvas.height/rect.height) }; }
+        function startDraw(e) { isDrawing = true; dCtx.beginPath(); const p = getPos(e); dCtx.moveTo(p.x, p.y); mascotReact('idle', 'Đang vẽ rất đẹp...'); }
+        function draw(e) { if(!isDrawing) return; const p = getPos(e); dCtx.lineTo(p.x, p.y); dCtx.lineWidth=8; dCtx.lineCap='round'; dCtx.strokeStyle=isDarkMode?'#38bdf8':'#ec48e9'; dCtx.stroke(); }
+        function stopDraw() { isDrawing = false; }
+        function clearCanvas() { dCtx.clearRect(0,0, drawCanvas.width, drawCanvas.height); mascotReact('sad', 'Vẽ lại từ đầu nào!'); hapticVibrate([50]); }
+        
+        function prepareDraw() {
+            const items = vocabData[currentSubject][currentCategory].items; const randomItem = items[Math.floor(Math.random() * items.length)];
+            currentDrawWord = randomItem.display || randomItem.word;
+            document.getElementById('drawHintText').innerText = currentDrawWord; 
+            
+            let hintVisual = randomItem.emoji;
+            if (currentCategory !== 'addition') {
+                const searchCtx = vocabData[currentSubject][currentCategory].searchContext;
+                let imgUrl = getImageUrl(randomItem, searchCtx);
+                hintVisual = `<img src="${imgUrl}" class="w-16 h-16 md:w-20 md:h-20 object-contain rounded-xl bg-white/80 p-1 border-2 border-indigo-100 inline-block drop-shadow-sm">`;
+            }
+            document.getElementById('drawHintEmoji').innerHTML = hintVisual;
+            clearCanvas();
+        }
+        function checkDrawing() {
+            playSfx('coin'); correctAnswers++; 
+            userData.stats.draws++; updateRewardProgress(); saveUsersData();
+            mascotReact('happy', 'Đẹp quá! 🌟');
+            const btn = document.querySelector('#drawingArea button.bg-green-500');
+            const oldT = btn.innerText; btn.innerText = 'Giỏi Quá! 🌟'; setTimeout(()=>{ btn.innerText = oldT; prepareDraw(); mascotReact('idle', 'Vẽ tiếp từ này nhé!'); }, 1500);
+        }
+        function playSfx(t) { playSound(t); }
+
+        function closeModals() { 
+            document.getElementById('giftModal').classList.add('hidden'); 
+            document.getElementById('bubbleModal').classList.add('hidden'); 
+            document.getElementById('rewardSelectModal').classList.add('hidden'); 
+            document.getElementById('badgeModal').classList.add('hidden'); 
+            if(document.getElementById('mainAppContent').classList.contains('hidden') === false) {
+                document.getElementById('mascot').classList.remove('hidden');
+            }
+        }
+        function closeModal(id) { 
+            document.getElementById(id).classList.add('hidden'); 
+            if(document.getElementById('mainAppContent').classList.contains('hidden') === false) {
+                document.getElementById('mascot').classList.remove('hidden');
+            }
+        }
+        
+        let giftTaps = 0;
+        function startGiftReward() { document.getElementById('rewardSelectModal').classList.add('hidden'); document.getElementById('giftModal').classList.remove('hidden'); document.getElementById('giftBox').classList.remove('hidden'); document.getElementById('giftResult').classList.add('hidden'); document.getElementById('giftText').innerText = "Chạm vào hộp quà 3 lần!"; giftTaps = 0; mascotReact('happy', 'Mau mở quà thôi!'); }
+        function tapGift() { giftTaps++; playSound('pop'); const box = document.getElementById('giftBox'); box.classList.remove('shake-animation'); void box.offsetWidth; box.classList.add('shake-animation'); hapticVibrate([50]); if(giftTaps === 3) { playSound('ting'); box.classList.add('hidden'); document.getElementById('giftResult').classList.remove('hidden'); document.getElementById('giftResult').classList.add('flex'); let randomToy = toyList[Math.floor(Math.random() * toyList.length)]; document.getElementById('giftItem').innerText = randomToy; collectedToys.push(randomToy); saveUsersData(); mascotReact('happy', 'Mở được đồ chơi rồi!'); hapticVibrate([100, 50, 100]); } }
+        
+        let bubbleInterval, bubbleTimer;
+        function startBubbleReward() { 
+            document.getElementById('rewardSelectModal').classList.add('hidden'); 
+            document.getElementById('bubbleModal').classList.remove('hidden'); 
+            const container = document.getElementById('bubbleGameContainer'); 
+            container.innerHTML = ''; let time = 10; document.getElementById('bubbleTimer').innerText = time + "s"; 
+            mascotReact('idle', 'Đập bóng nhanh nào!');
+            bubbleInterval = setInterval(() => { 
+                let b = document.createElement('div'); let size = Math.random() * 40 + 60; 
+                b.className = 'mini-bubble bg-white/40 border-4 border-white backdrop-blur-sm shadow-xl cursor-pointer'; 
+                b.style.width = size + 'px'; b.style.height = size + 'px'; b.style.left = Math.random() * 80 + 10 + '%'; 
+                b.style.animationDuration = (Math.random() * 2 + 3) + 's'; 
+                let emojis = ["⭐","🎈","🍬","🌸","🍓","🐳"]; b.innerText = emojis[Math.floor(Math.random() * emojis.length)]; 
+                b.style.touchAction = 'none'; 
+                
+                const popAction = function(e) { 
+                    if(e) { e.preventDefault(); e.stopPropagation(); }
+                    if(b.popped) return; b.popped = true; 
+                    playSound('pop'); userData.coins+=1; saveUsersData(); hapticVibrate([30]);
+                    b.style.transform = 'scale(1.5)'; b.style.opacity = '0'; 
+                    setTimeout(() => b.remove(), 200); 
+                };
+                b.addEventListener('touchstart', popAction, {passive: false});
+                b.addEventListener('mousedown', popAction);
+                container.appendChild(b); 
+            }, 350); 
+            bubbleTimer = setInterval(() => { 
+                time--; document.getElementById('bubbleTimer').innerText = time + "s"; 
+                if(time <= 0) { clearInterval(bubbleInterval); clearInterval(bubbleTimer); mascotReact('happy', 'Thu được nhiều Xu quá!'); alert("Hết giờ! Bé được cộng thêm Xu nè. Học tiếp nhé."); closeModals(); } 
+            }, 1000); 
+        }
+        
+        function openCabinet() { if(!currentUser) return; document.getElementById('cabinetModal').classList.remove('hidden'); document.getElementById('mascot').classList.add('hidden'); const container = document.getElementById('cabinetContainer'); container.innerHTML = ''; document.getElementById('cabinetCount').innerText = collectedToys.length; mascotReact('idle', 'Túi đồ của bé đây!'); if(collectedToys.length === 0) { container.innerHTML = `<div class="col-span-4 md:col-span-6 text-center text-amber-600 font-bold text-xl py-10">Tủ đồ trống. Bé mở hộp quà để nhận thêm nhé!</div>`; return; } collectedToys.forEach((toy, i) => { let div = document.createElement('div'); div.className = "bg-white p-4 rounded-2xl shadow-sm text-5xl text-center border-b-4 border-amber-200 hover:scale-110 transition-transform cursor-pointer"; div.innerText = toy; div.style.animation = `popOut 0.3s ease-out ${i*0.05}s forwards`; div.style.opacity = '0'; container.appendChild(div); }); }
+        
+        function updateCloudCategories() { const subj = document.getElementById('cloudSubject'); const catSelect = document.getElementById('cloudCategory'); if(!subj || !catSelect) return; catSelect.innerHTML = ''; for(let key in vocabData[subj.value]) { catSelect.innerHTML += `<option value="${key}">${vocabData[subj.value][key].name}</option>`; } }
+        window.saveToCloud = function() { const subj = document.getElementById('cloudSubject').value; const cat = document.getElementById('cloudCategory').value; const word = document.getElementById('cloudWord').value.toUpperCase(); const emoji = document.getElementById('cloudEmoji').value; const color = document.getElementById('cloudColor').value; if(word.trim() === "" || emoji.trim() === "") { alert("Hãy nhập Từ vựng và Biểu tượng nhé!"); return; } vocabData[subj][cat].items.push({ word: word, emoji: emoji, color: color }); localStorage.setItem('KidsLearningApp_Data', JSON.stringify(vocabData)); document.getElementById('cloudModal').classList.add('hidden'); document.getElementById('mascot').classList.remove('hidden'); document.getElementById('cloudWord').value = ''; document.getElementById('cloudEmoji').value = ''; if(currentSubject === subj && currentCategory === cat) renderCards(); alert("Đã lưu vào Đám mây!"); };
+        window.resetData = function() { if(confirm("Xóa từ đã thêm và khôi phục mặc định?")) { localStorage.removeItem('KidsLearningApp_Data'); vocabData = JSON.parse(JSON.stringify(defaultVocabData)); renderCards(); document.getElementById('cloudModal').classList.add('hidden'); document.getElementById('mascot').classList.remove('hidden'); } }
+
+        function openPetRoomReward() { 
+            document.getElementById('rewardSelectModal').classList.add('hidden'); 
+            if (userData.pet.type !== '🥚') {
+                userData.pet.type = '🥚'; userData.pet.level = 1;
+                mascotReact('happy', 'Tuyệt! Bé có 1 quả Trứng mới!');
+            } else {
+                userData.pet.level += 1;
+                mascotReact('happy', 'Trứng của bé đã lớn thêm!');
+            }
+            saveUsersData(); playSound('coin'); hapticVibrate([50, 100, 50]);
+            openPetRoom(); 
+        }
+
+        function openPetRoom() { 
+            document.getElementById('petModal').classList.remove('hidden'); 
+            document.getElementById('mascot').classList.add('hidden');
+            renderPetRoom(); 
+        }
+
+        function renderPetRoom() {
+            document.getElementById('mainPetContainer').innerHTML = `
+                <div id="mainPet" class="cursor-pointer hover:scale-110 transition-transform anim-breathe" onclick="petAnimal()">
+                    ${renderMascotImage(userData.pet.type, 'pet-image-3d')}
+                </div>
+            `;
+            
+            document.getElementById('petLevel').innerText = userData.pet.level;
+            const tray = document.getElementById('inventoryTray'); tray.innerHTML = ''; 
+            let hasFood = false;
+            
+            if(userData.inventory['apple']) { 
+                hasFood=true; 
+                let item = document.createElement('div');
+                item.className = "bg-white p-2 rounded-xl text-center shadow-sm cursor-pointer hover:bg-green-100 border-2 border-green-200";
+                item.innerHTML = `<div class="text-4xl mb-1">🍎</div><div class="font-bold text-xs">x${userData.inventory['apple']}</div>`;
+                item.onclick = () => feedPet('apple');
+                tray.appendChild(item);
+            }
+            if(userData.inventory['meat']) { 
+                hasFood=true; 
+                let item = document.createElement('div');
+                item.className = "bg-white p-2 rounded-xl text-center shadow-sm cursor-pointer hover:bg-green-100 border-2 border-green-200";
+                item.innerHTML = `<div class="text-4xl mb-1">🍖</div><div class="font-bold text-xs">x${userData.inventory['meat']}</div>`;
+                item.onclick = () => feedPet('meat');
+                tray.appendChild(item);
+            }
+            
+            if(!hasFood) {
+                let noFoodDiv = document.createElement('div');
+                noFoodDiv.className = "text-sm text-green-700 font-bold p-2 text-center w-full flex flex-col items-center";
+                noFoodDiv.innerHTML = "Bé chưa có đồ ăn.";
+                
+                let shopBtn = document.createElement('button');
+                shopBtn.className = "mt-2 bg-amber-400 text-white px-6 py-2 rounded-full font-bold shadow-md border-2 border-white hover:scale-105 active:scale-95";
+                shopBtn.innerText = "🛒 Tới Cửa Hàng Ngay";
+                shopBtn.onclick = () => {
+                    closeModal('petModal'); 
+                    document.getElementById('shopModal').classList.remove('hidden'); 
+                    document.getElementById('mascot').classList.add('hidden');
+                };
+                
+                noFoodDiv.appendChild(shopBtn);
+                tray.appendChild(noFoodDiv);
+            }
+
+            const petTray = document.getElementById('petCollectionTray');
+            petTray.innerHTML = '';
+            if(!userData.hatchedPets) userData.hatchedPets = ['🦉'];
+            if(!userData.activeMascot) userData.activeMascot = '🦉';
+
+            userData.hatchedPets.forEach(pet => {
+                let isCurrent = (pet === userData.activeMascot);
+                let div = document.createElement('div');
+                div.className = `mascot-pet-selector ${isCurrent ? 'active-pet' : ''}`;
+                div.innerHTML = renderMascotImage(pet, 'pet-image-3d-small');
+                
+                div.onclick = () => {
+                    userData.activeMascot = pet;
+                    saveUsersData(); renderPetRoom(); 
+                    document.getElementById('mascotBody').innerHTML = renderMascotImage(pet);
+                    playSound('ting');
+                };
+                petTray.appendChild(div);
+            });
+        }
+
+        function petAnimal() {
+            playSfx('pop'); 
+            const mainPetEl = document.getElementById('mainPet');
+            mainPetEl.classList.remove('shake-animation'); void mainPetEl.offsetWidth; mainPetEl.classList.add('shake-animation');
+            document.getElementById('petState').innerText = "Thích quá! 💖"; hapticVibrate([50]);
+            
+            if(userData.pet.type === '🥚' && userData.pet.level >= 2) {
+                let newHatchedPet = petList[Math.floor(Math.random() * petList.length)];
+                userData.pet.type = newHatchedPet; 
+                
+                if(!userData.hatchedPets) userData.hatchedPets = ['🦉'];
+                if(userData.hatchedPets.indexOf(newHatchedPet) === -1) { userData.hatchedPets.push(newHatchedPet); }
+                
+                document.getElementById('petState').innerText = "Trứng đã nở! Bé chọn bạn đồng hành ở dưới nhé!"; 
+                playSfx('coin'); saveUsersData(); renderPetRoom(); hapticVibrate([100, 50, 200]);
+            }
+        }
+        
+        function feedPet(foodId) {
+            if(userData.inventory[foodId] > 0) {
+                userData.inventory[foodId]--; userData.pet.level++; playSfx('pop'); document.getElementById('petState').innerText = "Ngăm ngăm! Bé đang lớn!"; saveUsersData(); renderPetRoom(); hapticVibrate([30]);
+            }
+        }
+        
+        function buyItem(id, price) {
+            if(userData.coins >= price) {
+                userData.coins -= price; playSfx('coin');
+                if(id === 'apple' || id === 'meat') { userData.inventory[id] = (userData.inventory[id] || 0) + 1; hapticVibrate([50]); }
+                else if(id === 'egg') { userData.pet.type = '🥚'; userData.pet.level = 1; alert("Đã mua Trứng mới! Bé hãy đóng cửa hàng và bấm nút Dấu chân 🐾 ở dưới để xem trứng nhé!"); renderPetRoom(); }
+                saveUsersData(); document.getElementById('shopCoinDisplay').innerText = userData.coins;
+            } else { alert("Bé không đủ Tiền xu rồi. Học ngoan để kiếm thêm nhé!"); }
+        }
+
+        let pinTarget = 12, currentPin = "";
+        function openParentPortal() {
+            let a = Math.floor(Math.random()*10)+1, b = Math.floor(Math.random()*10)+1;
+            pinTarget = a + b; currentPin = ""; document.getElementById('pinInput').value = "";
+            document.getElementById('pinMath').innerText = `${a} + ${b} = ?`; document.getElementById('pinModal').classList.remove('hidden');
+        }
+        function enterPin(num) {
+            currentPin += num.toString(); document.getElementById('pinInput').value = currentPin;
+            if(currentPin.length === pinTarget.toString().length) {
+                if(parseInt(currentPin) === pinTarget) {
+                    closeModal('pinModal'); document.getElementById('parentDashboard').classList.remove('hidden');
+                    document.getElementById('statLevel').innerText = userData.level; document.getElementById('statCoins').innerText = userData.coins + ' ¢'; document.getElementById('statItems').innerText = collectedToys.length + " đồ chơi";
+                } else {
+                    currentPin = ""; document.getElementById('pinInput').value = ""; 
+                    const i = document.getElementById('pinInput'); i.classList.add('shake-animation', 'text-red-500'); setTimeout(()=>{ i.classList.remove('shake-animation', 'text-red-500'); }, 500); hapticVibrate([100]);
+                }
+            }
+        }
+        function exportData() { const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(loadUsers())); const dlAnchorElem = document.createElement('a'); dlAnchorElem.setAttribute("href", dataStr); dlAnchorElem.setAttribute("download", "KidsLearningPro_Backup.json"); dlAnchorElem.click(); }
+        function importData(e) { const file = e.target.files[0]; if(!file) return; const reader = new FileReader(); reader.onload = (e) => { try { const data = JSON.parse(e.target.result); localStorage.setItem('KidsLearningPro_Users', JSON.stringify(data)); alert("Nhập dữ liệu thành công! Trang sẽ tải lại."); location.reload(); } catch(err) { alert("Lỗi file dữ liệu!"); } }; reader.readAsText(file); }
+
+    </script>
+</body>
+</html>
