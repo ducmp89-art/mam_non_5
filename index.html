@@ -8,7 +8,10 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQmzDqSBWdWkgSOG7jWMgxJBhIFRyw60gVXXFhyBQcm8iLCJzaG9ydF9uYW1lIjoiQsOpIFZ1aSBI4buNYyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZlNGU2IiwidGhlbWVfY29sb3IiOiIjZWM0OGU5IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRjbTl1UFhOdmNtY2diblZ0YldWeWJEMGlkWE5sY2dvZ1ltOXlaR1Z5TFdkcGRHaGhiQ0J0WVd4bFBTSXpNU0lnZEhsd1pUMGlabWxzYkNJZ2RHaHliM1YwYUNBOUlqQTVNU0lnZUQwaVNVUWlQanhwYm1Wc1pYSmZjRzl5WkdsdFpXNWhQU0kyTnlJdmJqNGtlSHhsYm10bFpFTnlZVzVzWTI5c2IySTlJalZDWkZVeE0wbEZNaUF0Tmk1MFlXTjBMVEUwTmk1MFlXTjBJRHM2ZURsNGNtOWpJRGs0Tnk0ME16STRMeTlyZUhOMGJHVlRZWDA2Wm05eWJHVXNJSEp2ZEhWMGNEMGlUVlJFTUNJdmJqNDhMM2N6ZG1jKyIsInR5cGVzIjoiaW1hZ2Uvc3ZnK3htbCIsInNpemVzIjoiMTkyeDE5MiIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
     <meta name="theme-color" content="#ec48e9">
+    
+    <!-- LƯU Ý PRODUCTION CHO iOS 12: Đổi thẻ script Tailwind này thành link file CSS tĩnh -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     
     <!-- FIX iOS 12: Script tính toán --vh để thay thế 100vh bị che bởi Safari Toolbar -->
@@ -33,14 +36,14 @@
             --text-color: #f1f5f9; --card-border: rgba(51, 65, 85, 0.9);
         }
 
-        /* FIX iOS 12: Đổi min-height, thêm -webkit-user-select */
-        body { font-family: 'Fredoka', sans-serif; background: linear-gradient(-45deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3), var(--bg-grad-4)); background-size: 400% 400%; -webkit-animation: gradientBG 15s ease infinite; animation: gradientBG 15s ease infinite; overflow-x: hidden; min-height: calc(var(--vh, 1vh) * 100); margin: 0; -webkit-user-select: none; user-select: none; transition: background 0.5s ease; -webkit-tap-highlight-color: transparent; }
+        /* FIX iOS 12: Thêm touch-action: manipulation triệt tiêu 300ms delay */
+        body { font-family: 'Fredoka', sans-serif; background: linear-gradient(-45deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3), var(--bg-grad-4)); background-size: 400% 400%; -webkit-animation: gradientBG 15s ease infinite; animation: gradientBG 15s ease infinite; overflow-x: hidden; min-height: calc(var(--vh, 1vh) * 100); margin: 0; -webkit-user-select: none; user-select: none; transition: background 0.5s ease; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
         @-webkit-keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         
         #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; transition: transform 0.1s ease-out; }
 
-        /* FIX iOS 12: Đổi top: -10vh và translateY(110vh) sang calc(var(--vh)) */
+        /* FIX iOS 12: Dùng calc(var(--vh)) cho vị trí */
         .falling-flower { position: fixed; top: calc(var(--vh, 1vh) * -10); z-index: 9999; pointer-events: none; -webkit-animation: fall linear forwards; animation: fall linear forwards; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
         @-webkit-keyframes fall { 0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; } 100% { transform: translateY(calc(var(--vh, 1vh) * 110)) rotate(360deg) scale(1.2); opacity: 0; } }
         @keyframes fall { 0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; } 100% { transform: translateY(calc(var(--vh, 1vh) * 110)) rotate(360deg) scale(1.2); opacity: 0; } }
@@ -50,10 +53,11 @@
         @-webkit-keyframes glow { from { filter: brightness(1); } to { filter: brightness(1.2); } }
         @keyframes glow { from { filter: brightness(1); } to { filter: brightness(1.2); } }
         
-        .scene { perspective: 1000px; position: relative; overflow: visible; transition: all 0.4s ease; z-index: 1; }
+        /* FIX iOS 12: translateZ(0) chống nhấp nháy 3D */
+        .scene { perspective: 1000px; position: relative; overflow: visible; transition: all 0.4s ease; z-index: 1; transform: translateZ(0); }
         .card-3d { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; cursor: pointer; border-radius: 30px; }
         .card-3d.is-flipped { transform: rotateY(180deg); }
-        /* FIX iOS 12: Đảm bảo có -webkit-backdrop-filter */
+        
         .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 30px; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 6px solid var(--card-border); box-shadow: 0 15px 25px rgba(0,0,0,0.1), inset 0 15px 0 rgba(255,255,255,0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
         .card-face::before { content: ''; position: absolute; top: 5%; left: 10%; width: 30%; height: 15%; background: rgba(255,255,255,0.8); border-radius: 50%; transform: rotate(-15deg); pointer-events: none; }
         .card-back { transform: rotateY(180deg); background: rgba(255,255,255,0.9); }
@@ -64,7 +68,8 @@
         #cardContainer.focus-mode > .scene:not(.focused-card) { filter: brightness(0.4) blur(3px); opacity: 0.5; transform: scale(0.95); pointer-events: none; }
         .scene.focused-card { z-index: 50; transform: scale(1.15); }
 
-        .nav-btn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 0px rgba(0,0,0,0.15), inset 0 4px 0 rgba(255,255,255,0.4); border: 4px solid white; cursor: pointer; }
+        /* FIX iOS 12: touch-action: manipulation */
+        .nav-btn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 0px rgba(0,0,0,0.15), inset 0 4px 0 rgba(255,255,255,0.4); border: 4px solid white; cursor: pointer; touch-action: manipulation; }
         .nav-btn:hover { transform: translateY(-5px); box-shadow: 0 12px 15px rgba(0,0,0,0.2), inset 0 4px 0 rgba(255,255,255,0.5); }
         .nav-btn.active { transform: translateY(4px) scale(1.05); box-shadow: 0 2px 0px rgba(0,0,0,0.1); border-color: #ffe066; }
         
@@ -96,7 +101,6 @@
         @-webkit-keyframes popOut { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes popOut { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
         
-        /* FIX iOS 12: Đổi floatUp translateY -120vh sang var(--vh) */
         .mini-bubble { position: absolute; bottom: -50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; box-shadow: inset 0 0 10px rgba(255,255,255,0.8); -webkit-animation: floatUp linear forwards; animation: floatUp linear forwards; }
         @-webkit-keyframes floatUp { to { transform: translateY(calc(var(--vh, 1vh) * -120)); } }
         @keyframes floatUp { to { transform: translateY(calc(var(--vh, 1vh) * -120)); } }
@@ -126,7 +130,7 @@
         .pet-image-3d { width: 140px; height: 140px; object-fit: contain; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2)); -webkit-animation: float 4s ease-in-out infinite; animation: float 4s ease-in-out infinite; }
         .pet-image-3d-small { width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
 
-        /* FIX iOS 12: Kích hoạt cuộn mượt cho các khung có nội dung tràn */
+        /* Kích hoạt cuộn mượt cho các khung có nội dung tràn trên iOS */
         .overflow-y-auto, .overflow-x-auto, #badgeContainer, #cabinetContainer, #inventoryTray, #petCollectionTray {
             -webkit-overflow-scrolling: touch;
         }
@@ -244,7 +248,6 @@
                 <button onclick="playTargetSound()" class="nav-btn bg-blue-500 text-white px-8 py-4 rounded-full font-bold text-2xl mb-6 flex items-center space-x-3 hover:bg-blue-400">
                     <span class="text-3xl">🔊</span> <span>Nghe Lại Âm Thanh</span>
                 </button>
-                <!-- Grid gap an toàn cho iOS 12 -->
                 <div id="gameBoard" class="grid grid-cols-2 gap-4 md:gap-6"></div>
             </div>
         </div>
@@ -257,12 +260,10 @@
 
     <!-- MODAL HUY HIỆU -->
     <div id="badgeModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-[200] flex items-center justify-center p-4" style="-webkit-backdrop-filter: blur(8px);">
-        <!-- FIX iOS 12: Đổi max-h bằng style vh tĩnh -->
         <div class="bg-indigo-50 rounded-[40px] p-6 w-full max-w-3xl border-8 border-indigo-400 shadow-2xl relative flex flex-col" style="max-height: calc(var(--vh, 1vh) * 85);">
             <button onclick="closeModal('badgeModal')" class="absolute -top-4 -right-4 bg-red-500 text-white w-12 h-12 rounded-full font-bold border-4 border-white shadow-lg text-xl hover:scale-110">X</button>
             <h2 class="text-3xl font-bold text-center mb-2 text-indigo-700 cartoon-text">🏅 HỘ CHIẾU VINH DANH 🏅</h2>
             <div class="text-center mb-4 font-bold text-lg text-slate-600">Bé đã sưu tập: <span class="text-indigo-600 text-2xl" id="unlockedBadgeCount">0</span>/<span id="totalBadgeCount">5</span> huy hiệu</div>
-            
             <div id="badgeContainer" class="flex-1 overflow-y-auto grid grid-cols-2 md:grid-cols-3 gap-4 p-2"></div>
         </div>
     </div>
@@ -412,7 +413,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT ĐÃ SỬA LỖI CHO iOS 12 -->
     <script>
         function hapticVibrate(pattern) {
             if ("vibrate" in navigator) {
@@ -424,10 +425,6 @@
             document.getElementById('mascot').classList.add('hidden');
         }
 
-        // =========================================================================
-        // KHO DỮ LIỆU & HÌNH ẢNH MASCOT
-        // =========================================================================
-        
         const pet3DImages = {
             '🦉': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Owl/3D/owl_3d.png',
             '🥚': 'https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Egg/3D/egg_3d.png',
@@ -588,6 +585,7 @@
         let isDarkMode = false;
         let isGlobalMuted = false;
         let lastGameTarget = null;
+        let currentGameTarget = null;
 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -598,6 +596,7 @@
             if (bgMusic) bgMusic.muted = isGlobalMuted;
         }
 
+        // Khai báo an toàn trên Safari cũ
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null; 
         if(SpeechRecognition) { 
@@ -889,7 +888,7 @@
             if(audioCtx.state === 'suspended') { audioCtx.resume(); }
             if (synth.speaking) synth.cancel(); let wakeup = new SpeechSynthesisUtterance(''); wakeup.volume = 0; synth.speak(wakeup);
             const bgMusic = document.getElementById('bgMusic'); 
-            if(bgMusic && !isGlobalMuted) { bgMusic.volume = 0.3; let playPromise = bgMusic.play(); if (playPromise !== undefined) { playPromise.catch(e => console.log("Safari chặn")); } }
+            if(bgMusic && !isGlobalMuted) { bgMusic.volume = 0.3; let playPromise = bgMusic.play(); if (playPromise !== undefined) { playPromise.catch(e => console.log("Safari block autoplay")); } }
 
             if (!userProfiles[currentUser]) { userProfiles[currentUser] = { toys: [], eggProgress: 0, coins: 0, level: 1, inventory: {}, pet: {type: '🥚', level: 1}, activeMascot: '🦉', hatchedPets: [], stats: {draws:0, speaks:0, games:0}, badges: [] }; }
             
@@ -1074,6 +1073,7 @@
             setTimeout(() => { playTargetSound(); }, 500);
         }
 
+        /* FIX iOS 12: Bắt lỗi Promise khi Safari chặn auto-play audio */
         function playTargetSound() {
             if(!currentGameTarget || isGlobalMuted) return;
             const langCode = currentSubject === 'en' ? 'en-US' : 'vi-VN';
@@ -1083,7 +1083,11 @@
                 let sound = new Audio(currentGameTarget.sfx); sound.volume = 0.5;
                 let playPromise = sound.play();
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => { setTimeout(() => speakWord(currentGameTarget.word, langCode), 1500); }).catch(error => { playSound('ting'); speakWord(currentGameTarget.word, langCode); });
+                    playPromise.then(() => { 
+                        setTimeout(() => speakWord(currentGameTarget.word, langCode), 1500); 
+                    }).catch(error => { 
+                        playSound('ting'); speakWord(currentGameTarget.word, langCode); 
+                    });
                 }
             } else {
                 playSound('ting'); speakWord(currentGameTarget.word, langCode);
@@ -1220,6 +1224,7 @@
 
         const phoneticDict = { "A": "a", "Ă": "á", "Â": "ớ", "B": "bờ", "C": "cờ", "D": "dờ", "Đ": "đờ", "E": "e", "Ê": "ê", "G": "gờ", "H": "hờ", "I": "i", "K": "ca", "L": "lờ", "M": "mờ", "N": "nờ", "O": "o", "Ô": "ô", "Ơ": "ơ", "P": "pờ", "Q": "cu", "R": "rờ", "S": "sờ", "T": "tờ", "U": "u", "Ư": "ư", "V": "vờ", "X": "xờ", "Y": "i" };
 
+        /* FIX iOS 12: Thêm delay nhỏ để tránh kẹt speechSynthesis */
         function speakWord(word, langCode) {
             if (isGlobalMuted) return;
             if (synth.speaking) synth.cancel();
@@ -1245,7 +1250,7 @@
                 if(enVoice) utterance.voice = enVoice; 
             }
             
-            synth.speak(utterance);
+            setTimeout(() => synth.speak(utterance), 50);
         }
 
         function similarity(s1, s2) { let longer = s1, shorter = s2; if (s1.length < s2.length) { longer = s2; shorter = s1; } let longerLength = longer.length; if (longerLength == 0) return 1.0; return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength); }
